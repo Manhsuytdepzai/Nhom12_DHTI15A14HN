@@ -1,0 +1,13 @@
+# Visual Studio related
+.vs/
+*.user
+*.suo
+
+# Build results
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll
+
+# Other
+*.log
