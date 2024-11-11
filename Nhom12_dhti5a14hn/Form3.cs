@@ -16,5 +16,23 @@ namespace Nhom12_dhti5a14hn
         {
             InitializeComponent();
         }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtp_ngaylaphd_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+            dtp_ngaylaphd.Value = DateTime.Now;
+            dtp_ngaylaphd.Enabled = false;
+            txt_tenthuoc.Enabled = false;
+            cb_loaithuoc.Enabled=false;
+        }
     }
 }

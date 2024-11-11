@@ -46,6 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connect\connect.cs" />
+    <Compile Include="Controller\BaoCao.cs" />
+    <Compile Include="Controller\ChiTietDonHang.cs" />
+    <Compile Include="Controller\ChiTietPhieuNhap.cs" />
+    <Compile Include="Controller\DonHang.cs" />
+    <Compile Include="Controller\KhachHang.cs" />
+    <Compile Include="Controller\NhaCungCap.cs" />
+    <Compile Include="Controller\PhanHoi.cs" />
+    <Compile Include="Controller\PhieuNhap.cs" />
+    <Compile Include="Controller\TaiKhoan.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +94,21 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form3.resx">
+      <DependentUpon>Form3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form5.resx">
+      <DependentUpon>Form5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form6.resx">
+      <DependentUpon>Form6.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
