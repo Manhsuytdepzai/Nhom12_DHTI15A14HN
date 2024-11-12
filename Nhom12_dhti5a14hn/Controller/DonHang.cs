@@ -36,7 +36,7 @@ namespace Nhom12_dhti5a14hn.Controller
             string checkCustomerSql = "SELECT COUNT(*) FROM KhachHang WHERE SoDienThoai = @SoDienThoai";
             SqlParameter[] checkCustomerParameters = new SqlParameter[]
             {
-        new SqlParameter("@SoDienThoai", SqlDbType.VarChar, 20) { Value = soDienThoai }
+                new SqlParameter("@SoDienThoai", SqlDbType.VarChar, 20) { Value = soDienThoai }
             };
 
             // Lấy kết quả trả về từ câu lệnh kiểm tra khách hàng

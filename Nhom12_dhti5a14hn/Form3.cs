@@ -187,8 +187,8 @@ namespace Nhom12_dhti5a14hn
         {
             string sql = "SELECT * FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang";
             SqlParameter[] parameters = new SqlParameter[] {
-        new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
-    };
+                new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+            };
 
             connect kn = new connect();
             DataTable dt = kn.readData(sql, parameters);

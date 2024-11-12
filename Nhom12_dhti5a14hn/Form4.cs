@@ -103,5 +103,10 @@ namespace Nhom12_dhti5a14hn
             txt_mancc.Clear();
             display_ncc.DataSource = ncc.getAllNcc();
         }
+
+        private void display_ncc_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

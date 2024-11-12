@@ -150,6 +150,7 @@
             this.display_ncc.Size = new System.Drawing.Size(596, 590);
             this.display_ncc.TabIndex = 42;
             this.display_ncc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.display_ncc_CellClick);
+            this.display_ncc.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.display_ncc_CellContentClick);
             // 
             // Form4
             // 
