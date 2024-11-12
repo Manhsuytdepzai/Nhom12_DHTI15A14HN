@@ -1,29 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Nhom12_dhti5a14hn.Connect
 {
-    internal class connect
+    internal class connect : IDisposable
     {
-        SqlConnection conn;
+        private SqlConnection conn;
 
-        public void openConnect()
+        // Khởi tạo kết nối cơ sở dữ liệu
+        public connect()
         {
             string kn = "Server=DESKTOP-09OL4KM;Database=QuanLyNhaThuoc;Integrated Security = True";
             conn = new SqlConnection(kn);
-            conn.Open();
-        }
-        public void closeConnect()
-        {
-            conn.Close();
         }
 
+        // Mở kết nối
+        public void openConnect()
+        {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
+        }
+
+        // Đóng kết nối
+        public void closeConnect()
+        {
+            if (conn.State != ConnectionState.Closed)
+            {
+                conn.Close();
+            }
+        }
+
+        // Đọc dữ liệu từ cơ sở dữ liệu
         public DataTable readData(string sql, SqlParameter[] para = null)
         {
             DataTable dt = new DataTable();
@@ -50,6 +61,7 @@ namespace Nhom12_dhti5a14hn.Connect
             return dt;
         }
 
+        // Thực thi câu lệnh không trả về kết quả
         public void NoneQuery(string sql, SqlParameter[] para)
         {
             try
@@ -66,12 +78,20 @@ namespace Nhom12_dhti5a14hn.Connect
             }
             catch (Exception)
             {
-                MessageBox.Show("");
+                MessageBox.Show("Lỗi khi thực thi câu lệnh");
             }
             finally
             {
                 closeConnect();
             }
+        }
+
+        // Implement IDisposable interface to ensure proper cleanup
+        public void Dispose()
+        {
+            // Giải phóng tài nguyên kết nối khi không sử dụng
+            closeConnect();
+            conn.Dispose();
         }
     }
 }

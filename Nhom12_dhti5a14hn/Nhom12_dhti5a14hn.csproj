@@ -48,11 +48,9 @@
   <ItemGroup>
     <Compile Include="Connect\connect.cs" />
     <Compile Include="Controller\BaoCao.cs" />
-    <Compile Include="Controller\ChiTietDonHang.cs" />
-    <Compile Include="Controller\ChiTietPhieuNhap.cs" />
     <Compile Include="Controller\DonHang.cs" />
     <Compile Include="Controller\KhachHang.cs" />
-    <Compile Include="Controller\NhaCungCap.cs" />
+    <Compile Include="Controller\NCC.cs" />
     <Compile Include="Controller\PhanHoi.cs" />
     <Compile Include="Controller\PhieuNhap.cs" />
     <Compile Include="Controller\TaiKhoan.cs" />
@@ -102,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form4.resx">
+      <DependentUpon>Form4.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form5.resx">
       <DependentUpon>Form5.cs</DependentUpon>
