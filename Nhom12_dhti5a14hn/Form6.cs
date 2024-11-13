@@ -30,5 +30,29 @@ namespace Nhom12_dhti5a14hn
             display_baocao.DataSource = bc.GetAllBill();
 
         }
+
+        private void tuoctn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                display.DataSource = bc.tkthuocnow();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi hiển thị báo cáo: " + ex.Message);
+            }
+        }
+
+        private void thuocall_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                display.DataSource = bc.GetAllThuoc();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi hiển thị báo cáo: " + ex.Message);
+            }
+        }
     }
 }

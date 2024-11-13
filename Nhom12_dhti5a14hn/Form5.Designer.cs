@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.xoa = new System.Windows.Forms.Button();
+            this.sua = new System.Windows.Forms.Button();
+            this.them = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -52,9 +52,10 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button4
@@ -69,41 +70,41 @@
             this.button4.Text = "button4";
             this.button4.UseVisualStyleBackColor = false;
             // 
-            // button3
+            // xoa
             // 
-            this.button3.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button3.Location = new System.Drawing.Point(571, 547);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 36);
-            this.button3.TabIndex = 15;
-            this.button3.Text = "Xóa ";
-            this.button3.UseVisualStyleBackColor = false;
+            this.xoa.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.xoa.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.xoa.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.xoa.Location = new System.Drawing.Point(571, 547);
+            this.xoa.Name = "xoa";
+            this.xoa.Size = new System.Drawing.Size(75, 36);
+            this.xoa.TabIndex = 15;
+            this.xoa.Text = "Xóa ";
+            this.xoa.UseVisualStyleBackColor = false;
             // 
-            // button2
+            // sua
             // 
-            this.button2.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button2.Location = new System.Drawing.Point(442, 547);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 36);
-            this.button2.TabIndex = 14;
-            this.button2.Text = "Sửa ";
-            this.button2.UseVisualStyleBackColor = false;
+            this.sua.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.sua.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sua.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.sua.Location = new System.Drawing.Point(442, 547);
+            this.sua.Name = "sua";
+            this.sua.Size = new System.Drawing.Size(75, 36);
+            this.sua.TabIndex = 14;
+            this.sua.Text = "Sửa ";
+            this.sua.UseVisualStyleBackColor = false;
             // 
-            // button1
+            // them
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button1.Location = new System.Drawing.Point(326, 547);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 36);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "Thêm ";
-            this.button1.UseVisualStyleBackColor = false;
+            this.them.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.them.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.them.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.them.Location = new System.Drawing.Point(326, 547);
+            this.them.Name = "them";
+            this.them.Size = new System.Drawing.Size(75, 36);
+            this.them.TabIndex = 13;
+            this.them.Text = "Thêm ";
+            this.them.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
@@ -283,15 +284,6 @@
             this.Column1.Name = "Column1";
             this.Column1.Width = 80;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Location = new System.Drawing.Point(291, 280);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(540, 240);
-            this.groupBox2.TabIndex = 11;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Danh sách khách hàng";
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label7);
@@ -317,22 +309,33 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin khách hàng";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(294, 298);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(569, 219);
+            this.dataGridView1.TabIndex = 17;
+            // 
             // Form5
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1130, 667);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.xoa);
+            this.Controls.Add(this.sua);
+            this.Controls.Add(this.them);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form5";
             this.Text = "Form5";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,9 +344,9 @@
         #endregion
 
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button xoa;
+        private System.Windows.Forms.Button sua;
+        private System.Windows.Forms.Button them;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox1;
@@ -364,7 +367,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

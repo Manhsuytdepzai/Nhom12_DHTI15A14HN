@@ -274,20 +274,7 @@ namespace Nhom12_dhti5a14hn
 
         private void button2_Click(object sender, EventArgs e)
         {
-            try
-            {
-                int idctpn = int.Parse(txt_tkctpn.Text);
-                display_ctpn.DataSource = ctpn.TkCTPN(idctpn);
-                txtSoLuong.Clear();
-                txtDonGia.Clear();
-                txtMaThuoc.Clear();
-                txtMactpn.Clear();
-                txt_idpn.Clear();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi tìm kiếm: " + ex.Message);
-            }
+
         }
     }
 }

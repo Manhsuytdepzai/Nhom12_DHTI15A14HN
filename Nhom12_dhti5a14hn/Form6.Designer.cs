@@ -120,6 +120,7 @@
             this.thuocall.TabIndex = 18;
             this.thuocall.Text = "Tất cả";
             this.thuocall.UseVisualStyleBackColor = false;
+            this.thuocall.Click += new System.EventHandler(this.thuocall_Click);
             // 
             // tuoctn
             // 
@@ -132,6 +133,7 @@
             this.tuoctn.TabIndex = 17;
             this.tuoctn.Text = "Trong ngày";
             this.tuoctn.UseVisualStyleBackColor = false;
+            this.tuoctn.Click += new System.EventHandler(this.tuoctn_Click);
             // 
             // Form6
             // 
