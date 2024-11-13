@@ -29,20 +29,21 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.txt_tenncc = new System.Windows.Forms.TextBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txt_mancc = new System.Windows.Forms.TextBox();
+            this.txtUsername = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnLogin = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // txt_tenncc
+            // txtPassword
             // 
-            this.txt_tenncc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_tenncc.Location = new System.Drawing.Point(281, 225);
-            this.txt_tenncc.Name = "txt_tenncc";
-            this.txt_tenncc.Size = new System.Drawing.Size(343, 30);
-            this.txt_tenncc.TabIndex = 14;
+            this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPassword.Location = new System.Drawing.Point(281, 225);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(343, 30);
+            this.txtPassword.TabIndex = 14;
             // 
             // label3
             // 
@@ -66,13 +67,13 @@
             this.label2.TabIndex = 12;
             this.label2.Text = "User Name:";
             // 
-            // txt_mancc
+            // txtUsername
             // 
-            this.txt_mancc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_mancc.Location = new System.Drawing.Point(281, 180);
-            this.txt_mancc.Name = "txt_mancc";
-            this.txt_mancc.Size = new System.Drawing.Size(343, 30);
-            this.txt_mancc.TabIndex = 11;
+            this.txtUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUsername.Location = new System.Drawing.Point(281, 180);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(343, 30);
+            this.txtUsername.TabIndex = 11;
             // 
             // label1
             // 
@@ -85,19 +86,30 @@
             this.label1.Size = new System.Drawing.Size(237, 91);
             this.label1.TabIndex = 15;
             this.label1.Text = "Login";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // btnLogin
+            // 
+            this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogin.Location = new System.Drawing.Point(372, 273);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(142, 45);
+            this.btnLogin.TabIndex = 16;
+            this.btnLogin.Text = "Đăng Nhập";
+            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(799, 436);
+            this.ClientSize = new System.Drawing.Size(802, 437);
+            this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txt_tenncc);
+            this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.txt_mancc);
+            this.Controls.Add(this.txtUsername);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -108,11 +120,12 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txt_tenncc;
+        private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txt_mancc;
+        private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnLogin;
     }
 }
 
