@@ -1,15 +1,18 @@
 ﻿using Nhom12_dhti5a14hn.Connect;
 using Nhom12_dhti5a14hn.Controller;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace Nhom12_dhti5a14hn
 {
@@ -19,7 +22,7 @@ namespace Nhom12_dhti5a14hn
         public Form3()
         {
             InitializeComponent();
-            
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
         }
 
         private void label6_Click(object sender, EventArgs e)
@@ -350,5 +353,138 @@ namespace Nhom12_dhti5a14hn
             txt_mathuoc.Clear();
             txt_sl.Clear();
         }
+
+        private void xuat_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Lấy mã đơn hàng từ control
+                string madonhang = txt_madh.Text;
+
+                // Lấy dữ liệu từ DataTable dựa trên mã đơn hàng
+                DataTable dtDonHang = dh.GetDonHangByMa(madonhang);
+                DataTable dtChiTietDonHang = dh.GetChiTietDonHangByMa(madonhang);
+
+                // Kiểm tra xem DataTable có dữ liệu không
+                if (dtDonHang == null || dtDonHang.Rows.Count == 0 ||
+                    dtChiTietDonHang == null || dtChiTietDonHang.Rows.Count == 0)
+                {
+                    MessageBox.Show("Không có dữ liệu để xuất ra file Excel.");
+                    return;
+                }
+
+                // Tiếp tục với phần code xuất file Excel
+                using (var package = new OfficeOpenXml.ExcelPackage())
+                {
+                    // Tạo worksheet cho đơn hàng
+                    var worksheet1 = package.Workbook.Worksheets.Add("Đơn hàng");
+                    worksheet1.Cells["B1"].Value = "Đơn hàng";
+                    worksheet1.Cells["B2"].Value = "Mã đơn hàng: " + madonhang;
+                    worksheet1.Cells["B3"].Value = "Ngày đặt hàng: " + ((DateTime)dtDonHang.Rows[0]["NgayDatHang"]).ToString("dd/MM/yyyy");
+                    worksheet1.Cells["B4:F4"].Style.Font.Bold = true;
+                    worksheet1.Cells["A5"].LoadFromDataTable(dtDonHang, true);
+                    worksheet1.DeleteColumn(1);
+
+                    // Tạo worksheet cho chi tiết đơn hàng
+                    var worksheet2 = package.Workbook.Worksheets.Add("Chi tiết đơn hàng");
+                    worksheet2.Cells["A1:E1"].Style.Font.Bold = true;
+                    worksheet2.Cells["A2"].LoadFromDataTable(dtChiTietDonHang, true);
+
+                    // Xuất hóa đơn
+                    ExportInvoice(package, madonhang);
+
+                    // Lưu file Excel
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
+                    saveFileDialog.FileName = $"DonHang_{madonhang}.xlsx";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        File.WriteAllBytes(saveFileDialog.FileName, package.GetAsByteArray());
+                        MessageBox.Show("Xuất file Excel thành công!");
+
+                        // Disable mã đơn hàng sau khi xuất file
+                        txt_madh.Enabled = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi xuất file Excel: " + ex.Message);
+            }
+        }
+        private void ExportInvoice(ExcelPackage package, string madonhang)
+        {
+            // Lấy dữ liệu chi tiết đơn hàng dựa trên mã đơn hàng
+            DataTable dtChiTietDonHang = dh.GetChiTietDonHangByMa(madonhang);
+
+            // Tạo một worksheet mới cho hóa đơn
+            var invoiceSheet = package.Workbook.Worksheets.Add("Hóa đơn");
+
+            // Tiêu đề và thông tin hóa đơn
+            invoiceSheet.Cells["A1"].Value = "Hóa đơn";
+            invoiceSheet.Cells["A2"].Value = "Mã đơn hàng: " + madonhang;
+
+            // Tiêu đề các cột
+            invoiceSheet.Cells["A4"].Value = "Tên Thuốc";
+            invoiceSheet.Cells["B4"].Value = "Giá Bán";
+            invoiceSheet.Cells["C4"].Value = "Số Lượng";
+            invoiceSheet.Cells["D4"].Value = "Thành Tiền";
+
+            // Thiết lập tiêu đề in đậm
+            invoiceSheet.Cells["A4:D4"].Style.Font.Bold = true;
+
+            // Dòng bắt đầu cho dữ liệu chi tiết đơn hàng
+            int row = 5;
+
+            // Lặp qua từng dòng trong DataTable và ghi vào worksheet
+            foreach (DataRow dr in dtChiTietDonHang.Rows)
+            {
+                invoiceSheet.Cells[row, 1].Value = dr["TenThuoc"].ToString();
+
+                // Kiểm tra và gán giá trị cho cột Giá Bán
+                if (dr["GiaBan"] != DBNull.Value)
+                {
+                    decimal giaBan = Convert.ToDecimal(dr["GiaBan"]);
+                    invoiceSheet.Cells[row, 2].Value = giaBan;
+                }
+                else
+                {
+                    invoiceSheet.Cells[row, 2].Value = 0;
+                }
+
+                // Kiểm tra và gán giá trị cho cột Số Lượng và Thành Tiền
+                if (dr["Soluong"] != DBNull.Value)
+                {
+                    decimal giaBan = Convert.ToDecimal(dr["GiaBan"]);
+                    double soLuong = Convert.ToDouble(dr["Soluong"]);
+                    invoiceSheet.Cells[row, 3].Value = soLuong;
+                    decimal thanhTien = giaBan * (decimal)soLuong;
+                    invoiceSheet.Cells[row, 4].Value = thanhTien;
+                }
+                else
+                {
+                    invoiceSheet.Cells[row, 3].Value = 0;
+                    invoiceSheet.Cells[row, 4].Value = 0;
+                }
+
+                row++;
+            }
+
+            // Thêm hàng tổng cộng ở cuối danh sách
+            invoiceSheet.Cells[row, 3].Value = "Tổng hoá đơn:";
+            invoiceSheet.Cells[row, 3].Style.Font.Bold = true;
+
+            // Công thức tính tổng cho cột "Thành Tiền"
+            invoiceSheet.Cells[row, 4].Formula = $"SUM(D5:D{row - 1})";
+            invoiceSheet.Cells[row, 4].Style.Font.Bold = true;
+
+            // Định dạng số cho cột Thành Tiền (nếu cần)
+            invoiceSheet.Cells[$"D5:D{row}"].Style.Numberformat.Format = "#,##0.00";
+
+            // Thiết lập tự động điều chỉnh độ rộng cột
+            invoiceSheet.Cells.AutoFitColumns();
+        }
+
     }
 }

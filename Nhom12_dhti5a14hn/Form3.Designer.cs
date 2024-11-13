@@ -34,6 +34,8 @@
             this.display_qldh = new System.Windows.Forms.DataGridView();
             this.dtp_ngaylaphd = new System.Windows.Forms.DateTimePicker();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txt_sl = new System.Windows.Forms.TextBox();
+            this.t = new System.Windows.Forms.Label();
             this.btn_xoact = new System.Windows.Forms.Button();
             this.btn_suact = new System.Windows.Forms.Button();
             this.reset = new System.Windows.Forms.Button();
@@ -60,8 +62,7 @@
             this.display_dh = new System.Windows.Forms.DataGridView();
             this.btn_sua = new System.Windows.Forms.Button();
             this.btn_xoa = new System.Windows.Forms.Button();
-            this.txt_sl = new System.Windows.Forms.TextBox();
-            this.t = new System.Windows.Forms.Label();
+            this.xuat = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.display_qldh)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.display_dh)).BeginInit();
@@ -148,6 +149,24 @@
             this.panel1.Size = new System.Drawing.Size(528, 586);
             this.panel1.TabIndex = 19;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // txt_sl
+            // 
+            this.txt_sl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_sl.Location = new System.Drawing.Point(185, 247);
+            this.txt_sl.Name = "txt_sl";
+            this.txt_sl.Size = new System.Drawing.Size(324, 30);
+            this.txt_sl.TabIndex = 31;
+            // 
+            // t
+            // 
+            this.t.AutoSize = true;
+            this.t.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.t.Location = new System.Drawing.Point(27, 247);
+            this.t.Name = "t";
+            this.t.Size = new System.Drawing.Size(105, 25);
+            this.t.TabIndex = 30;
+            this.t.Text = "Số lượng:";
             // 
             // btn_xoact
             // 
@@ -406,29 +425,23 @@
             this.btn_xoa.UseVisualStyleBackColor = true;
             this.btn_xoa.Click += new System.EventHandler(this.btn_xoa_Click);
             // 
-            // txt_sl
+            // xuat
             // 
-            this.txt_sl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_sl.Location = new System.Drawing.Point(185, 247);
-            this.txt_sl.Name = "txt_sl";
-            this.txt_sl.Size = new System.Drawing.Size(324, 30);
-            this.txt_sl.TabIndex = 31;
-            // 
-            // t
-            // 
-            this.t.AutoSize = true;
-            this.t.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.t.Location = new System.Drawing.Point(27, 247);
-            this.t.Name = "t";
-            this.t.Size = new System.Drawing.Size(105, 25);
-            this.t.TabIndex = 30;
-            this.t.Text = "Số lượng:";
+            this.xuat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.xuat.Location = new System.Drawing.Point(1008, 64);
+            this.xuat.Name = "xuat";
+            this.xuat.Size = new System.Drawing.Size(74, 30);
+            this.xuat.TabIndex = 35;
+            this.xuat.Text = "=>";
+            this.xuat.UseVisualStyleBackColor = true;
+            this.xuat.Click += new System.EventHandler(this.xuat_Click);
             // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1094, 704);
+            this.Controls.Add(this.xuat);
             this.Controls.Add(this.btn_xoa);
             this.Controls.Add(this.btn_sua);
             this.Controls.Add(this.display_dh);
@@ -488,5 +501,6 @@
         private System.Windows.Forms.Button btn_xoact;
         private System.Windows.Forms.TextBox txt_sl;
         private System.Windows.Forms.Label t;
+        private System.Windows.Forms.Button xuat;
     }
 }

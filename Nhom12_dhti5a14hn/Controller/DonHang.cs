@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Linq;
@@ -453,7 +454,27 @@ namespace Nhom12_dhti5a14hn.Controller
             return dt;
         }
 
+        public DataTable GetDonHangByMa(string maDonHang)
+        {
+            string sql = "SELECT NgayDatHang, TongTien, SoDienThoai, TenKhachHang FROM Donhang WHERE ID_DonHang = @MaDonHang";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaDonHang", SqlDbType.VarChar, 50) { Value = maDonHang }
+            };
 
+            return Connect.readData(sql, parameters);
+        }
+
+        public DataTable GetChiTietDonHangByMa(string maDonHang)
+        {
+            string sql = "SELECT ID_DonHang, TenThuoc, Soluong, GiaBan FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+            new SqlParameter("@MaDonHang", SqlDbType.VarChar, 50) { Value = maDonHang }
+            };
+
+            return Connect.readData(sql, parameters);
+        }
 
     }
 }
