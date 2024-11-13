@@ -249,7 +249,44 @@ namespace Nhom12_dhti5a14hn
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi sửa phiếu nhập: " + ex.Message);
+                MessageBox.Show("Lỗi khi xoá phiếu nhập: " + ex.Message);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int maPN = int.Parse(txt_tkpn.Text);
+                display_pn.DataSource = pn.TkPN(maPN);
+                Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tìm kiếm: " + ex.Message);
+            }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idctpn = int.Parse(txt_tkctpn.Text);
+                display_ctpn.DataSource = ctpn.TkCTPN(idctpn);
+                txtSoLuong.Clear();
+                txtDonGia.Clear();
+                txtMaThuoc.Clear();
+                txtMactpn.Clear();
+                txt_idpn.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tìm kiếm: " + ex.Message);
             }
         }
     }

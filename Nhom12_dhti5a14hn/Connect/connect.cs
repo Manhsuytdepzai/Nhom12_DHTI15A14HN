@@ -93,5 +93,36 @@ namespace Nhom12_dhti5a14hn.Connect
             closeConnect();
             conn.Dispose();
         }
+        public DataSet readDataSet(string sql, SqlParameter[] parameters)
+        {
+            DataSet dataSet = new DataSet();
+
+            // Dùng chuỗi kết nối từ class để mở kết nối
+            using (SqlConnection connection = new SqlConnection("Server=DESKTOP-09OL4KM;Database=QuanLyNhaThuoc;Integrated Security=True"))
+            {
+                try
+                {
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, connection);
+
+                    // Thêm các tham số vào câu lệnh SQL nếu có
+                    if (parameters != null)
+                    {
+                        dataAdapter.SelectCommand.Parameters.AddRange(parameters);
+                    }
+
+                    // Mở kết nối
+                    connection.Open();
+
+                    // Thực thi truy vấn và điền dữ liệu vào DataSet
+                    dataAdapter.Fill(dataSet);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi: " + ex.Message);
+                }
+            }
+            return dataSet;
+        }
+
     }
 }

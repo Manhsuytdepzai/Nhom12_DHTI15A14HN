@@ -141,6 +141,24 @@ namespace Nhom12_dhti5a14hn.Controller
                 MessageBox.Show("Lỗi khi xóa phiếu nhập: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        public DataTable TkPN(int maPN)
+        {
+            string sql = "SELECT * FROM PhieuNhap WHERE ID_PhieuNhap = @MaPN";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaPN", SqlDbType.Int) { Value = maPN }
+            };
+
+            DataTable dt = Connect.readData(sql, parameters);
+
+            if (dt.Rows.Count == 0)
+            {
+                throw new Exception("ID_PhieuNhap không tồn tại trong bảng PhieuNhap.");
+            }
+
+            return dt;
+        }
 
     }
 }

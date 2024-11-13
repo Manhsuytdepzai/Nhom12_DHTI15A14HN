@@ -159,7 +159,7 @@ namespace Nhom12_dhti5a14hn.Controller
                 string checkThuocSql = "SELECT COUNT(*) FROM Thuoc WHERE MaThuoc = @MaThuoc";
                 SqlParameter[] checkThuocParameters = new SqlParameter[]
                 {
-            new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = idThuoc }
+                    new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = idThuoc }
                 };
 
                 int count = Convert.ToInt32(Connect.readData(checkThuocSql, checkThuocParameters).Rows[0][0]);
@@ -182,7 +182,7 @@ namespace Nhom12_dhti5a14hn.Controller
                 string getDonGiaSql = "SELECT GiaNhap FROM Thuoc WHERE MaThuoc = @MaThuoc";
                 SqlParameter[] getDonGiaParameters = new SqlParameter[]
                 {
-            new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = idThuoc }
+                    new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = idThuoc }
                 };
 
                 decimal giaNhap = Convert.ToDecimal(Connect.readData(getDonGiaSql, getDonGiaParameters).Rows[0]["GiaNhap"]);
@@ -205,32 +205,32 @@ namespace Nhom12_dhti5a14hn.Controller
 
                 // Cập nhật chi tiết phiếu nhập
                 string updateChiTietSql = @"
-            UPDATE ChiTietPhieuNhap 
-            SET SoLuong = @SoLuong, 
-                ID_Thuoc = @ID_Thuoc, 
-                DonGia = @DonGia 
-            WHERE ID_ChiTietPhieuNhap = @ID_ChiTietPhieuNhap";
+                                            UPDATE ChiTietPhieuNhap 
+                                            SET SoLuong = @SoLuong, 
+                                                ID_Thuoc = @ID_Thuoc, 
+                                                DonGia = @DonGia 
+                                            WHERE ID_ChiTietPhieuNhap = @ID_ChiTietPhieuNhap";
 
                 SqlParameter[] updateChiTietParameters = new SqlParameter[]
                 {
-            new SqlParameter("@SoLuong", SqlDbType.Int) { Value = soLuong },
-            new SqlParameter("@ID_Thuoc", SqlDbType.Int) { Value = idThuoc },
-            new SqlParameter("@DonGia", SqlDbType.Decimal) { Value = donGia },
-            new SqlParameter("@ID_ChiTietPhieuNhap", SqlDbType.Int) { Value = idChiTietPhieuNhap }
+                    new SqlParameter("@SoLuong", SqlDbType.Int) { Value = soLuong },
+                    new SqlParameter("@ID_Thuoc", SqlDbType.Int) { Value = idThuoc },
+                    new SqlParameter("@DonGia", SqlDbType.Decimal) { Value = donGia },
+                    new SqlParameter("@ID_ChiTietPhieuNhap", SqlDbType.Int) { Value = idChiTietPhieuNhap }
                 };
 
                 Connect.NoneQuery(updateChiTietSql, updateChiTietParameters);
 
                 // Cập nhật tổng tiền cho phiếu nhập
                 string updatePhieuNhapSql = @"
-            UPDATE PhieuNhap 
-            SET TongTien = TongTien + @TongTienChiTiet 
-            WHERE ID_PhieuNhap = @ID_PhieuNhap";
+                                                UPDATE PhieuNhap 
+                                                SET TongTien = TongTien + @TongTienChiTiet 
+                                                WHERE ID_PhieuNhap = @ID_PhieuNhap";
 
                 SqlParameter[] updatePhieuNhapParameters = new SqlParameter[]
                 {
-            new SqlParameter("@TongTienChiTiet", SqlDbType.Decimal) { Value = tongTienChiTiet },
-            new SqlParameter("@ID_PhieuNhap", SqlDbType.Int) { Value = idPhieuNhap }
+                    new SqlParameter("@TongTienChiTiet", SqlDbType.Decimal) { Value = tongTienChiTiet },
+                    new SqlParameter("@ID_PhieuNhap", SqlDbType.Int) { Value = idPhieuNhap }
                 };
 
                 // Thực hiện cập nhật tổng tiền cho phiếu nhập
@@ -247,7 +247,6 @@ namespace Nhom12_dhti5a14hn.Controller
         {
             try
             {
-                // Lấy thông tin chi tiết phiếu nhập cần xóa (bao gồm số lượng, đơn giá)
                 string getChiTietSql = "SELECT SoLuong, DonGia FROM ChiTietPhieuNhap WHERE ID_ChiTietPhieuNhap = @ID_ChiTietPhieuNhap";
                 SqlParameter[] getChiTietParameters = new SqlParameter[]
                 {
@@ -301,6 +300,24 @@ namespace Nhom12_dhti5a14hn.Controller
             }
         }
 
+        public DataTable TkCTPN(int maCTPN)
+        {
+            string sql = "SELECT * FROM ChiTietPhieuNhap WHERE ID_ChiTietPhieuNhap = @MaCTPN";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaCTPN", SqlDbType.Int) { Value = maCTPN }
+            };
+
+            DataTable dt = Connect.readData(sql, parameters);
+
+            if (dt.Rows.Count == 0)
+            {
+                throw new Exception("Chi tiết phiếu nhập không tồn tại.");
+            }
+
+            return dt;
+        }
 
     }
 }

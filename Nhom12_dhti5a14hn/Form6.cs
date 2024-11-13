@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nhom12_dhti5a14hn.Controller;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,22 @@ namespace Nhom12_dhti5a14hn
 {
     public partial class Form6 : Form
     {
+        BaoCao bc = new BaoCao();
         public Form6()
         {
             InitializeComponent();
+        }
+
+        private void thongke_Click(object sender, EventArgs e)
+        {
+            display_baocao.DataSource = bc.GetAllnow();
+
+        }
+
+        private void btn_tkall_Click(object sender, EventArgs e)
+        {
+            display_baocao.DataSource = bc.GetAllBill();
+
         }
     }
 }

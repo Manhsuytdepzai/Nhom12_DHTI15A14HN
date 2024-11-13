@@ -22,7 +22,8 @@ namespace Nhom12_dhti5a14hn.Controller
 
         public DataTable GetAllBill()
         {
-            string sql = "select * from ChiTietDonHang";
+            string sql = "SELECT ID_DonHang, ID_Thuoc, TenThuoc, GiaBan, Soluong, (GiaBan * Soluong) AS ThanhTien " +
+                 "FROM ChiTietDonHang";
             return Connect.readData(sql);
         }
         public DataTable GetAll()
@@ -95,18 +96,18 @@ namespace Nhom12_dhti5a14hn.Controller
 
 
 
-        public void CreatDH(int maDonHang, int maThuoc, string tenThuoc, decimal giaBan)
+        public void CreatDH(int maDonHang, int maThuoc, string tenThuoc, decimal giaBan, float soLuong)
         {
             try
             {
-                // Bước 1: Kiểm tra xem mã đơn hàng có tồn tại trong bảng HoaDon không
+                // Step 1: Check if the order ID exists in the HoaDon table
                 string checkHoaDonSql = "SELECT COUNT(*) FROM Donhang WHERE ID_DonHang = @MaDonHang";
                 SqlParameter[] checkHoaDonParams = new SqlParameter[]
                 {
-            new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                    new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
                 };
 
-                // Kiểm tra kết quả trả về
+                // Check the result
                 DataTable checkHoaDonResult = Connect.readData(checkHoaDonSql, checkHoaDonParams);
                 if (Convert.ToInt32(checkHoaDonResult.Rows[0][0]) == 0)
                 {
@@ -114,34 +115,36 @@ namespace Nhom12_dhti5a14hn.Controller
                     return;
                 }
 
-                // Bước 2: Thêm dòng mới vào bảng ChiTietDonHang
-                string sqlInsert = "INSERT INTO ChiTietDonHang (ID_DonHang, ID_Thuoc, TenThuoc, GiaBan) " +
-                                   "VALUES (@MaDonHang, @MaThuoc, @TenThuoc, @GiaBan)";
+                // Step 2: Insert a new row into ChiTietDonHang with Soluong
+                string sqlInsert = "INSERT INTO ChiTietDonHang (ID_DonHang, ID_Thuoc, TenThuoc, GiaBan, Soluong) " +
+                                   "VALUES (@MaDonHang, @MaThuoc, @TenThuoc, @GiaBan, @Soluong)";
 
-                // Tạo mảng các tham số cho câu lệnh SQL Insert
+                // Create parameters for the SQL Insert command
                 SqlParameter[] insertParameters = new SqlParameter[]
                 {
                     new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang },
                     new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc },
                     new SqlParameter("@TenThuoc", SqlDbType.VarChar, 255) { Value = tenThuoc },
-                    new SqlParameter("@GiaBan", SqlDbType.Decimal) { Value = giaBan }
+                    new SqlParameter("@GiaBan", SqlDbType.Decimal) { Value = giaBan },
+                    new SqlParameter("@Soluong", SqlDbType.Float) { Value = soLuong }
                 };
 
-                // Thực hiện câu lệnh Insert để thêm chi tiết đơn hàng
+                // Execute Insert command to add order details
                 Connect.NoneQuery(sqlInsert, insertParameters);
 
-                // Bước 3: Cập nhật tổng tiền trong bảng HoaDon
-                string sqlUpdateTongTien = "UPDATE Donhang SET TongTien = (SELECT SUM(GiaBan) FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang) " +
+                // Step 3: Update TongTien in the Donhang table considering GiaBan * Soluong
+                string sqlUpdateTongTien = "UPDATE Donhang SET TongTien = (SELECT SUM(GiaBan * Soluong) FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang) " +
                                            "WHERE ID_DonHang = @MaDonHang";
 
-                // Tạo mảng tham số cho câu lệnh SQL Update
+                // Create parameter array for the Update command
                 SqlParameter[] updateParameters = new SqlParameter[]
                 {
-            new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                    new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
                 };
 
-                // Thực hiện câu lệnh Update để cập nhật tổng tiền
+                // Execute Update command to update total amount
                 Connect.NoneQuery(sqlUpdateTongTien, updateParameters);
+
                 GetAll();
                 MessageBox.Show("Chi tiết đơn hàng đã được thêm thành công và tổng tiền đã được cập nhật.");
             }
@@ -150,6 +153,7 @@ namespace Nhom12_dhti5a14hn.Controller
                 MessageBox.Show("Lỗi khi thêm chi tiết đơn hàng: " + ex.Message);
             }
         }
+
 
 
 

@@ -81,7 +81,7 @@ namespace Nhom12_dhti5a14hn
                 if (!string.IsNullOrEmpty(tenThuoc) && tenThuoc != "Không tìm thấy thuốc")
                 {
                     txt_tenthuoc.Text = tenThuoc;
-                    txt_giaban.Text = giaBan.ToString("C");
+                    txt_giaban.Text = giaBan.ToString();
                 }
                 else
                 {
@@ -101,17 +101,21 @@ namespace Nhom12_dhti5a14hn
         {
             try
             {
+                // Validate Mã đơn hàng (Order ID)
                 if (!int.TryParse(txt_madh.Text, out int madh))
                 {
                     MessageBox.Show("Mã đơn hàng không hợp lệ.");
                     return;
                 }
+
+                // Validate Mã thuốc (Medicine ID)
                 if (!int.TryParse(txt_mathuoc.Text, out int math))
                 {
                     MessageBox.Show("Mã thuốc không hợp lệ.");
                     return;
                 }
 
+                // Validate Tên thuốc (Medicine Name)
                 string tenth = txt_tenthuoc.Text;
                 if (string.IsNullOrWhiteSpace(tenth))
                 {
@@ -119,18 +123,31 @@ namespace Nhom12_dhti5a14hn
                     return;
                 }
 
+                // Validate Giá bán (Price)
                 if (!decimal.TryParse(txt_giaban.Text, out decimal gia))
                 {
                     MessageBox.Show("Giá bán không hợp lệ.");
                     return;
                 }
-                dh.CreatDH(madh, math, tenth, gia);
+
+                // Validate Số lượng (Quantity)
+                if (!float.TryParse(txt_sl.Text, out float soLuong) || soLuong <= 0)
+                {
+                    MessageBox.Show("Số lượng không hợp lệ.");
+                    return;
+                }
+
+                // Call CreatDH with the additional soLuong parameter
+                dh.CreatDH(madh, math, tenth, gia, soLuong);
+
+                // Display updated order data
                 display_qldh.DataSource = dh.GetAllBill();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi: " + ex.Message);
             }
+
         }
 
         private void btn_reset_Click(object sender, EventArgs e)
@@ -150,6 +167,7 @@ namespace Nhom12_dhti5a14hn
                     txt_mathuoc.Text = row.Cells["ID_Thuoc"].Value.ToString();
                     txt_tenthuoc.Text = row.Cells["TenThuoc"].Value.ToString();
                     txt_giaban.Text = row.Cells["GiaBan"].Value.ToString();
+                    txt_sl.Text = row.Cells["Soluong"].Value.ToString();
                 }
             }
             catch (Exception ex)
@@ -206,7 +224,14 @@ namespace Nhom12_dhti5a14hn
 
         private void reset_Click(object sender, EventArgs e)
         {
-            
+            txt_giaban.Clear();
+            txt_madhthem.Clear();
+            txt_madh.Clear();
+            txt_sdt.Clear();
+            txt_tenkh.Clear();
+            txt_tenthuoc.Clear();
+            txt_mathuoc.Clear();
+            txt_sl.Clear();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -293,6 +318,7 @@ namespace Nhom12_dhti5a14hn
             txt_tenkh.Clear();
             txt_tenthuoc.Clear();
             txt_mathuoc.Clear();
+            txt_sl.Clear();
         }
 
         private void btn_xoact_Click(object sender, EventArgs e)
@@ -308,6 +334,7 @@ namespace Nhom12_dhti5a14hn
             txt_tenkh.Clear();
             txt_tenthuoc.Clear();
             txt_mathuoc.Clear();
+            txt_sl.Clear();
         }
 
         private void btn_ktra_Click(object sender, EventArgs e)
@@ -321,6 +348,7 @@ namespace Nhom12_dhti5a14hn
             txt_tenkh.Clear();
             txt_tenthuoc.Clear();
             txt_mathuoc.Clear();
+            txt_sl.Clear();
         }
     }
 }

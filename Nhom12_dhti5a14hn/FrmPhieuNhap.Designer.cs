@@ -56,6 +56,10 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.txt_mapn = new System.Windows.Forms.TextBox();
+            this.txt_tkctpn = new System.Windows.Forms.TextBox();
+            this.txt_tkpn = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.display_pn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.display_ctpn)).BeginInit();
             this.SuspendLayout();
@@ -300,7 +304,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(390, 328);
+            this.label9.Location = new System.Drawing.Point(30, 331);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(370, 46);
             this.label9.TabIndex = 71;
@@ -310,7 +314,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(446, 36);
+            this.label10.Location = new System.Drawing.Point(47, 34);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(231, 46);
             this.label10.TabIndex = 71;
@@ -334,11 +338,56 @@
             this.txt_mapn.Size = new System.Drawing.Size(324, 30);
             this.txt_mapn.TabIndex = 72;
             // 
+            // txt_tkctpn
+            // 
+            this.txt_tkctpn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_tkctpn.Location = new System.Drawing.Point(757, 341);
+            this.txt_tkctpn.Multiline = true;
+            this.txt_tkctpn.Name = "txt_tkctpn";
+            this.txt_tkctpn.Size = new System.Drawing.Size(324, 36);
+            this.txt_tkctpn.TabIndex = 74;
+            // 
+            // txt_tkpn
+            // 
+            this.txt_tkpn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_tkpn.Location = new System.Drawing.Point(757, 50);
+            this.txt_tkpn.Multiline = true;
+            this.txt_tkpn.Name = "txt_tkpn";
+            this.txt_tkpn.Size = new System.Drawing.Size(324, 36);
+            this.txt_tkpn.TabIndex = 75;
+            this.txt_tkpn.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(1106, 50);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(40, 36);
+            this.button1.TabIndex = 76;
+            this.button1.Text = "Sửa";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(1106, 341);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(40, 36);
+            this.button2.TabIndex = 77;
+            this.button2.Text = "Sửa";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // FrmPhieuNhap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1189, 705);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.txt_tkpn);
+            this.Controls.Add(this.txt_tkctpn);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.txt_mapn);
             this.Controls.Add(this.label10);
@@ -407,5 +456,9 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txt_mapn;
+        private System.Windows.Forms.TextBox txt_tkctpn;
+        private System.Windows.Forms.TextBox txt_tkpn;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
