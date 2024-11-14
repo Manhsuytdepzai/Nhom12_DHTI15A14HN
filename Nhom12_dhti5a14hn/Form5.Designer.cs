@@ -44,6 +44,8 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.Display_kh = new System.Windows.Forms.DataGridView();
+            this.txtPhoneNumber = new System.Windows.Forms.TextBox();
+            this.btn_back = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Display_kh)).BeginInit();
             this.SuspendLayout();
@@ -53,19 +55,20 @@
             this.Tk.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.Tk.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Tk.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.Tk.Location = new System.Drawing.Point(694, 547);
+            this.Tk.Location = new System.Drawing.Point(706, 608);
             this.Tk.Name = "Tk";
             this.Tk.Size = new System.Drawing.Size(106, 36);
             this.Tk.TabIndex = 16;
             this.Tk.Text = "Tìm Kiếm";
             this.Tk.UseVisualStyleBackColor = false;
+            this.Tk.Click += new System.EventHandler(this.Tk_Click);
             // 
             // xoa
             // 
             this.xoa.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.xoa.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.xoa.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.xoa.Location = new System.Drawing.Point(571, 547);
+            this.xoa.Location = new System.Drawing.Point(530, 608);
             this.xoa.Name = "xoa";
             this.xoa.Size = new System.Drawing.Size(75, 36);
             this.xoa.TabIndex = 15;
@@ -78,7 +81,7 @@
             this.sua.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.sua.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sua.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.sua.Location = new System.Drawing.Point(442, 547);
+            this.sua.Location = new System.Drawing.Point(350, 608);
             this.sua.Name = "sua";
             this.sua.Size = new System.Drawing.Size(75, 36);
             this.sua.TabIndex = 14;
@@ -206,11 +209,31 @@
             this.Display_kh.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Display_kh_CellContentClick);
             this.Display_kh.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.Display_kh_DataBindingComplete);
             // 
+            // txtPhoneNumber
+            // 
+            this.txtPhoneNumber.Location = new System.Drawing.Point(377, 552);
+            this.txtPhoneNumber.Name = "txtPhoneNumber";
+            this.txtPhoneNumber.Size = new System.Drawing.Size(393, 22);
+            this.txtPhoneNumber.TabIndex = 18;
+            // 
+            // btn_back
+            // 
+            this.btn_back.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_back.Location = new System.Drawing.Point(12, 12);
+            this.btn_back.Name = "btn_back";
+            this.btn_back.Size = new System.Drawing.Size(74, 30);
+            this.btn_back.TabIndex = 44;
+            this.btn_back.Text = "<";
+            this.btn_back.UseVisualStyleBackColor = true;
+            this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
+            // 
             // Form5
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1130, 667);
+            this.Controls.Add(this.btn_back);
+            this.Controls.Add(this.txtPhoneNumber);
             this.Controls.Add(this.Display_kh);
             this.Controls.Add(this.Tk);
             this.Controls.Add(this.xoa);
@@ -246,5 +269,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView Display_kh;
+        private System.Windows.Forms.TextBox txtPhoneNumber;
+        private System.Windows.Forms.Button btn_back;
     }
 }

@@ -24,17 +24,18 @@ namespace Nhom12_dhti5a14hn.Controller
             string sql = "select * from KhachHang";
             return kn.readData(sql);
         }
-        public bool IsPhoneNumberExistInOrder(string phoneNumber)
+        public bool IsCustomerExistInOrder(int idKhachHang)
         {
-            string sql = "SELECT COUNT(*) FROM Donhang WHERE SoDienThoai = @SoDienThoai";
+            string sql = "SELECT COUNT(*) FROM Donhang WHERE ID_KhachHang = @ID_KhachHang";
             SqlParameter[] para = new SqlParameter[]
             {
-                new SqlParameter("@SoDienThoai", SqlDbType.NVarChar) { Value = phoneNumber }
+                new SqlParameter("@ID_KhachHang", SqlDbType.Int) { Value = idKhachHang }
             };
 
             DataTable dt = kn.readData(sql, para);
             return Convert.ToInt32(dt.Rows[0][0]) > 0;
         }
+
         public void UpdateKhachHangAndDonhang(int idKhachHang, string tenKhachHang, string soDienThoai)
         {
             // Câu lệnh SQL cập nhật bảng KhachHang
@@ -75,38 +76,58 @@ namespace Nhom12_dhti5a14hn.Controller
                 MessageBox.Show($"Có lỗi xảy ra khi cập nhật: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        public void DeleteCustomerIfNoOrders(string phoneNumber)
+        public void DeleteCustomerIfNoOrders(int idKhachHang)
         {
-            // Kiểm tra xem số điện thoại có trong bảng Donhang không
-            if (IsPhoneNumberExistInOrder(phoneNumber))
+            // Tạo đối tượng kết nối mới
+            using (var kn = new connect())
             {
-                // Hiển thị thông báo nếu khách hàng có tồn tại hóa đơn mua hàng
-                MessageBox.Show("Không thể xóa vì khách hàng này có hóa đơn mua hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                // Câu lệnh SQL xóa khách hàng
-                string sqlDeleteKhachHang = "DELETE FROM KhachHang WHERE SoDienThoai = @SoDienThoai";
-                SqlParameter[] parameters = new SqlParameter[]
+                // Kiểm tra xem khách hàng có tồn tại hóa đơn không
+                if (IsCustomerExistInOrder(idKhachHang))
                 {
-            new SqlParameter("@SoDienThoai", SqlDbType.Int) { Value = phoneNumber }
-                };
-
-                try
-                {
-                    // Thực thi câu lệnh xóa khách hàng thông qua phương thức NoneQuery đã có
-                    kn.NoneQuery(sqlDeleteKhachHang, parameters);
-
-                    // Thông báo thành công
-                    MessageBox.Show("Xóa khách hàng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Thông báo nếu khách hàng có hóa đơn mua hàng
+                    MessageBox.Show("Không thể xóa vì khách hàng này có hóa đơn mua hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                catch (Exception ex)
+                else
                 {
-                    // Thông báo lỗi nếu xảy ra
-                    MessageBox.Show($"Có lỗi xảy ra khi xóa: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // Câu lệnh SQL để xóa khách hàng
+                    string sqlDeleteKhachHang = "DELETE FROM KhachHang WHERE ID_KhachHang = @ID_KhachHang";
+                    SqlParameter[] parameters = new SqlParameter[]
+                    {
+                new SqlParameter("@ID_KhachHang", SqlDbType.Int) { Value = idKhachHang }
+                    };
+
+                    try
+                    {
+                        // Thực thi câu lệnh xóa khách hàng
+                        kn.NoneQuery(sqlDeleteKhachHang, parameters);
+
+                        // Thông báo thành công
+                        MessageBox.Show("Xóa khách hàng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (SqlException ex)
+                    {
+                        // Thông báo lỗi nếu xảy ra lỗi SQL
+                        MessageBox.Show($"Có lỗi SQL xảy ra khi xóa: {ex.Message}", "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Thông báo lỗi nếu xảy ra lỗi khác
+                        MessageBox.Show($"Có lỗi xảy ra khi xóa: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
+        public DataTable SearchCustomerByPhone(string phoneNumber)
+        {
+            string sql = "SELECT * FROM KhachHang WHERE SoDienThoai = @SoDienThoai";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@SoDienThoai", SqlDbType.VarChar) { Value = phoneNumber }
+            };
+
+            return kn.readData(sql, parameters);
+        }
+
 
     }
 }

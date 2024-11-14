@@ -486,5 +486,11 @@ namespace Nhom12_dhti5a14hn
             invoiceSheet.Cells.AutoFitColumns();
         }
 
+        private void btn_back_Click(object sender, EventArgs e)
+        {
+            frm_Main fm = new frm_Main();
+            fm.Show();
+            this.Close();
+        }
     }
 }

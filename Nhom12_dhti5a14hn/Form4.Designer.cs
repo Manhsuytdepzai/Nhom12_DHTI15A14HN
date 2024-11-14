@@ -39,6 +39,7 @@
             this.txt_mancc = new System.Windows.Forms.TextBox();
             this.txt_tenncc = new System.Windows.Forms.TextBox();
             this.display_ncc = new System.Windows.Forms.DataGridView();
+            this.btn_back = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.display_ncc)).BeginInit();
             this.SuspendLayout();
             // 
@@ -152,11 +153,23 @@
             this.display_ncc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.display_ncc_CellClick);
             this.display_ncc.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.display_ncc_CellContentClick);
             // 
+            // btn_back
+            // 
+            this.btn_back.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_back.Location = new System.Drawing.Point(35, 26);
+            this.btn_back.Name = "btn_back";
+            this.btn_back.Size = new System.Drawing.Size(74, 30);
+            this.btn_back.TabIndex = 43;
+            this.btn_back.Text = "<";
+            this.btn_back.UseVisualStyleBackColor = true;
+            this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
+            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1151, 696);
+            this.Controls.Add(this.btn_back);
             this.Controls.Add(this.display_ncc);
             this.Controls.Add(this.btn_xoact);
             this.Controls.Add(this.btn_suact);
@@ -190,5 +203,6 @@
         private System.Windows.Forms.TextBox txt_mancc;
         private System.Windows.Forms.TextBox txt_tenncc;
         private System.Windows.Forms.DataGridView display_ncc;
+        private System.Windows.Forms.Button btn_back;
     }
 }

@@ -29,27 +29,32 @@ namespace Nhom12_dhti5a14hn
         {
             foreach (DataGridViewRow row in Display_kh.Rows)
             {
-                string phoneNumber = row.Cells["SoDienThoai"].Value?.ToString();
-
-                if (string.IsNullOrEmpty(phoneNumber))
+                // Lấy giá trị ID_KhachHang từ dòng hiện tại và kiểm tra giá trị null
+                if (row.Cells["ID_KhachHang"].Value != null && int.TryParse(row.Cells["ID_KhachHang"].Value.ToString(), out int makh))
                 {
-                    row.DefaultCellStyle.BackColor = Color.Red;
-                }
-                else
-                {
-                    bool hasOrder = kh.IsPhoneNumberExistInOrder(phoneNumber);
+                    // Kiểm tra nếu ID_KhachHang có hóa đơn
+                    bool hasOrder = kh.IsCustomerExistInOrder(makh);
 
                     if (!hasOrder)
                     {
+                        // Nếu không có hóa đơn, đổi màu nền của dòng thành màu đỏ
                         row.DefaultCellStyle.BackColor = Color.Red;
                     }
                     else
                     {
+                        // Ngược lại, giữ màu nền trắng
                         row.DefaultCellStyle.BackColor = Color.White;
                     }
                 }
+                else
+                {
+                    // Nếu ID_KhachHang bị null hoặc không hợp lệ, có thể đặt màu cảnh báo hoặc bỏ qua
+                    row.DefaultCellStyle.BackColor = Color.Gray; // Đặt màu nền xám nếu muốn
+                }
             }
         }
+
+
         private void Display_kh_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
 
@@ -113,10 +118,8 @@ namespace Nhom12_dhti5a14hn
         {
             try
             {
-                string newSoDienThoai = txtdienthoai.Text;
-
-                // Cập nhật thông tin khách hàng
-                kh.DeleteCustomerIfNoOrders(newSoDienThoai);
+                int idKhachHang = int.Parse(txtmakh.Text);
+                kh.DeleteCustomerIfNoOrders(idKhachHang);
                 Display_kh.DataSource = kh.GetAllKH();
                 HighlightRowsWithoutOrders();
                 txtmakh.Clear();
@@ -131,6 +134,41 @@ namespace Nhom12_dhti5a14hn
             {
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        public void DisplayCustomerByPhone(string phoneNumber)
+        {
+            DataTable customerData = kh.SearchCustomerByPhone(phoneNumber);
+
+                if (customerData.Rows.Count > 0)
+                {
+                    Display_kh.DataSource = customerData;
+                }
+                else
+                {
+                    MessageBox.Show("Không tìm thấy khách hàng với số điện thoại này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Display_kh.DataSource = null;
+                }
+        }
+
+        private void Tk_Click(object sender, EventArgs e)
+        {
+            string phoneNumber = txtPhoneNumber.Text.Trim(); // Lấy số điện thoại từ ô nhập liệu
+
+            if (!string.IsNullOrEmpty(phoneNumber))
+            {
+                DisplayCustomerByPhone(phoneNumber);
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng nhập số điện thoại để tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btn_back_Click(object sender, EventArgs e)
+        {
+            frm_Main fm = new frm_Main();
+            fm.Show();
+            this.Close();
         }
     }
 }
