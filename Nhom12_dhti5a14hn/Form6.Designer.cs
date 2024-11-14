@@ -36,6 +36,7 @@
             this.display = new System.Windows.Forms.DataGridView();
             this.thuocall = new System.Windows.Forms.Button();
             this.tuoctn = new System.Windows.Forms.Button();
+            this.btn_back = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.display_baocao)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.display)).BeginInit();
             this.SuspendLayout();
@@ -135,11 +136,23 @@
             this.tuoctn.UseVisualStyleBackColor = false;
             this.tuoctn.Click += new System.EventHandler(this.tuoctn_Click);
             // 
+            // btn_back
+            // 
+            this.btn_back.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_back.Location = new System.Drawing.Point(12, 12);
+            this.btn_back.Name = "btn_back";
+            this.btn_back.Size = new System.Drawing.Size(74, 30);
+            this.btn_back.TabIndex = 44;
+            this.btn_back.Text = "<";
+            this.btn_back.UseVisualStyleBackColor = true;
+            this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
+            // 
             // Form6
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1148, 707);
+            this.Controls.Add(this.btn_back);
             this.Controls.Add(this.thuocall);
             this.Controls.Add(this.tuoctn);
             this.Controls.Add(this.display);
@@ -166,5 +179,6 @@
         private System.Windows.Forms.DataGridView display;
         private System.Windows.Forms.Button thuocall;
         private System.Windows.Forms.Button tuoctn;
+        private System.Windows.Forms.Button btn_back;
     }
 }
