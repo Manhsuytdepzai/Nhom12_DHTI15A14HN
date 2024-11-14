@@ -1,23 +1,18 @@
 ﻿using Nhom12_dhti5a14hn.Controller;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Nhom12_dhti5a14hn
 {
     public partial class Form4 : Form
     {
-        NCC ncc = new NCC();
+        private NCC ncc = new NCC();
+
         public Form4()
         {
             InitializeComponent();
             txt_mancc.Enabled = false;
+            display_ncc.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void btn_them_Click(object sender, EventArgs e)
@@ -32,13 +27,10 @@ namespace Nhom12_dhti5a14hn
                 return;
             }
 
-            // Thêm nhà cung cấp mới
             ncc.AddNCC(tenncc, dchi);
 
-            // Cập nhật lại DataGridView
             display_ncc.DataSource = ncc.getAllNcc();
 
-            // Xóa dữ liệu trong các TextBox sau khi thêm thành công
             txt_tenncc.Clear();
             txt_dchi.Clear();
         }
@@ -60,7 +52,7 @@ namespace Nhom12_dhti5a14hn
                 return;
             }
 
-            ncc.UpdateNCC(mancc,tenncc, dchi);
+            ncc.UpdateNCC(mancc, tenncc, dchi);
 
             display_ncc.DataSource = ncc.getAllNcc();
 
@@ -106,7 +98,6 @@ namespace Nhom12_dhti5a14hn
 
         private void display_ncc_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void btn_back_Click(object sender, EventArgs e)
@@ -114,6 +105,12 @@ namespace Nhom12_dhti5a14hn
             frm_Main fm = new frm_Main();
             fm.Show();
             this.Close();
+        }
+
+        private void tkiem_Click(object sender, EventArgs e)
+        {
+            string tkiem = txt_tk.Text;
+            display_ncc.DataSource = ncc.SearchNCC(tkiem);
         }
     }
 }

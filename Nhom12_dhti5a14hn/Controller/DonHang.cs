@@ -1,20 +1,14 @@
 ﻿using Nhom12_dhti5a14hn.Connect;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Nhom12_dhti5a14hn.Controller
 {
     internal class DonHang
     {
-        connect Connect;
+        private connect Connect;
 
         public DonHang()
         {
@@ -27,11 +21,13 @@ namespace Nhom12_dhti5a14hn.Controller
                  "FROM ChiTietDonHang";
             return Connect.readData(sql);
         }
+
         public DataTable GetAll()
         {
             string sql = "SELECT * FROM [dbo].[Donhang]";
             return Connect.readData(sql);
         }
+
         public void UpdateDonHang(int maDonHang, DateTime ngayDatHang, string soDienThoai, string tenKhachHang)
         {
             string checkCustomerSql = "SELECT COUNT(*) FROM KhachHang WHERE SoDienThoai = @SoDienThoai";
@@ -83,16 +79,19 @@ namespace Nhom12_dhti5a14hn.Controller
             }
         }
 
-
-
         public void CreateDH(int maDonHang, int maThuoc, string tenThuoc, decimal giaBan, float soLuong)
         {
             try
             {
+                if (IsOrderPaid(maDonHang))
+                {
+                    MessageBox.Show("Đơn hàng đã được thanh toán, không thể thêm chi tiết.");
+                    return;
+                }
                 string checkHoaDonSql = "SELECT COUNT(*) FROM Donhang WHERE ID_DonHang = @MaDonHang";
                 SqlParameter[] checkHoaDonParams = new SqlParameter[]
                 {
-            new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                    new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
                 };
 
                 DataTable checkHoaDonResult = Connect.readData(checkHoaDonSql, checkHoaDonParams);
@@ -105,7 +104,7 @@ namespace Nhom12_dhti5a14hn.Controller
                 string checkThuocSql = "SELECT SoLuong FROM Thuoc WHERE MaThuoc = @MaThuoc";
                 SqlParameter[] checkThuocParams = new SqlParameter[]
                 {
-            new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc }
+                    new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc }
                 };
 
                 DataTable thuocData = Connect.readData(checkThuocSql, checkThuocParams);
@@ -130,11 +129,11 @@ namespace Nhom12_dhti5a14hn.Controller
 
                 SqlParameter[] insertParameters = new SqlParameter[]
                 {
-            new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang },
-            new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc },
-            new SqlParameter("@TenThuoc", SqlDbType.VarChar, 255) { Value = tenThuoc },
-            new SqlParameter("@GiaBan", SqlDbType.Decimal) { Value = giaBan },
-            new SqlParameter("@Soluong", SqlDbType.Float) { Value = soLuong }
+                    new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang },
+                    new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc },
+                    new SqlParameter("@TenThuoc", SqlDbType.VarChar, 255) { Value = tenThuoc },
+                    new SqlParameter("@GiaBan", SqlDbType.Decimal) { Value = giaBan },
+                    new SqlParameter("@Soluong", SqlDbType.Float) { Value = soLuong }
                 };
 
                 Connect.NoneQuery(sqlInsert, insertParameters);
@@ -144,7 +143,7 @@ namespace Nhom12_dhti5a14hn.Controller
 
                 SqlParameter[] updateParameters = new SqlParameter[]
                 {
-            new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                    new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
                 };
 
                 Connect.NoneQuery(sqlUpdateTongTien, updateParameters);
@@ -152,8 +151,8 @@ namespace Nhom12_dhti5a14hn.Controller
                 string sqlUpdateThuoc = "UPDATE Thuoc SET SoLuong = SoLuong - @SoLuong WHERE MaThuoc = @MaThuoc";
                 SqlParameter[] updateThuocParams = new SqlParameter[]
                 {
-            new SqlParameter("@SoLuong", SqlDbType.Float) { Value = soLuong },
-            new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc }
+                    new SqlParameter("@SoLuong", SqlDbType.Float) { Value = soLuong },
+                    new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc }
                 };
 
                 Connect.NoneQuery(sqlUpdateThuoc, updateThuocParams);
@@ -199,78 +198,85 @@ namespace Nhom12_dhti5a14hn.Controller
 
             return (tenThuoc, giaBan);
         }
+
         public void UpdateChiTietDonHang(int maDonHang, int maThuoc, string tenThuoc, decimal giaBan, float soLuongMoi)
         {
             try
             {
-                string checkThuocSql = "SELECT SoLuong FROM Thuoc WHERE MaThuoc = @MaThuoc";
-                SqlParameter[] checkThuocParams = new SqlParameter[]
+                if (IsOrderPaid(maDonHang))
                 {
-            new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc }
-                };
-
-                DataTable thuocData = Connect.readData(checkThuocSql, checkThuocParams);
-                if (thuocData.Rows.Count > 0)
-                {
-                    float soLuongTrongKho = Convert.ToSingle(thuocData.Rows[0]["SoLuong"]);
-
-                    if (soLuongMoi > soLuongTrongKho)
-                    {
-                        MessageBox.Show("Số lượng thuốc yêu cầu vượt quá số lượng hiện có trong kho.");
-                        return;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Thuốc không tồn tại trong kho.");
+                    MessageBox.Show("Đơn hàng đã được thanh toán, không thể thêm chi tiết.");
                     return;
                 }
 
+                // Check quantity in stock
+                string checkThuocSql = "SELECT SoLuong FROM Thuoc WHERE MaThuoc = @MaThuoc";
+                SqlParameter[] checkThuocParams = new SqlParameter[]
+                {
+                    new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc }
+                };
+
+                DataTable thuocData = Connect.readData(checkThuocSql, checkThuocParams);
+                float soLuongTrongKho = thuocData.Rows.Count > 0 && thuocData.Rows[0]["SoLuong"] != DBNull.Value
+                    ? Convert.ToSingle(thuocData.Rows[0]["SoLuong"])
+                    : 0;
+
+                if (soLuongMoi > soLuongTrongKho)
+                {
+                    MessageBox.Show("Số lượng thuốc yêu cầu vượt quá số lượng hiện có trong kho.");
+                    return;
+                }
+
+                // Check if order item already exists
                 string checkSql = "SELECT Soluong FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang AND ID_Thuoc = @MaThuoc";
                 SqlParameter[] checkParameters = new SqlParameter[]
                 {
-            new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang },
-            new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc }
+                    new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang },
+                    new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc }
                 };
 
                 DataTable dt = Connect.readData(checkSql, checkParameters);
+                float soLuongCu = dt.Rows.Count > 0 && dt.Rows[0]["Soluong"] != DBNull.Value
+                    ? Convert.ToSingle(dt.Rows[0]["Soluong"])
+                    : 0;
 
                 if (dt.Rows.Count > 0)
                 {
-                    float soLuongCu = Convert.ToSingle(dt.Rows[0]["Soluong"]);
-
+                    // Update existing order item
                     string updateSql = "UPDATE ChiTietDonHang SET TenThuoc = @TenThuoc, GiaBan = @GiaBan, Soluong = @SoLuongMoi " +
                                        "WHERE ID_DonHang = @MaDonHang AND ID_Thuoc = @MaThuoc";
 
                     SqlParameter[] updateParameters = new SqlParameter[]
                     {
-                new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang },
-                new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc },
-                new SqlParameter("@TenThuoc", SqlDbType.VarChar, 255) { Value = tenThuoc },
-                new SqlParameter("@GiaBan", SqlDbType.Decimal) { Value = giaBan },
-                new SqlParameter("@SoLuongMoi", SqlDbType.Float) { Value = soLuongMoi }
+                        new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang },
+                        new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc },
+                        new SqlParameter("@TenThuoc", SqlDbType.VarChar, 255) { Value = tenThuoc },
+                        new SqlParameter("@GiaBan", SqlDbType.Decimal) { Value = giaBan },
+                        new SqlParameter("@SoLuongMoi", SqlDbType.Float) { Value = soLuongMoi }
                     };
 
                     Connect.NoneQuery(updateSql, updateParameters);
 
+                    // Adjust stock quantity based on difference
                     float chenhLechSoLuong = soLuongCu - soLuongMoi;
-                    string updateThuocSql = "UPDATE Thuoc SET SoLuong = SoLuong + @ChenhLechSoLuong WHERE ID_Thuoc = @MaThuoc";
+                    string updateThuocSql = "UPDATE Thuoc SET SoLuong = SoLuong + @ChenhLechSoLuong WHERE MaThuoc = @MaThuoc";
 
                     SqlParameter[] updateThuocParams = new SqlParameter[]
                     {
-                new SqlParameter("@ChenhLechSoLuong", SqlDbType.Float) { Value = -chenhLechSoLuong },
-                new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc }
+                        new SqlParameter("@ChenhLechSoLuong", SqlDbType.Float) { Value = -chenhLechSoLuong },
+                        new SqlParameter("@MaThuoc", SqlDbType.Int) { Value = maThuoc }
                     };
 
                     Connect.NoneQuery(updateThuocSql, updateThuocParams);
 
+                    // Update total price in Donhang table
                     string sqlUpdateTongTien = "UPDATE Donhang SET TongTien = " +
                                                "(SELECT ISNULL(SUM(GiaBan * Soluong), 0) FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang) " +
                                                "WHERE ID_DonHang = @MaDonHang";
 
                     SqlParameter[] updateTongTienParams = new SqlParameter[]
                     {
-                new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                        new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
                     };
 
                     Connect.NoneQuery(sqlUpdateTongTien, updateTongTienParams);
@@ -287,8 +293,6 @@ namespace Nhom12_dhti5a14hn.Controller
                 MessageBox.Show("Lỗi khi cập nhật chi tiết đơn hàng: " + ex.Message);
             }
         }
-
-
 
         public void UpdateDonHangtt(int maDonHang, DateTime ngayDatHang, string soDienThoai, string tenKhachHang)
         {
@@ -360,7 +364,6 @@ namespace Nhom12_dhti5a14hn.Controller
         {
             try
             {
-                // Kiểm tra xem mã đơn hàng có tồn tại trong bảng Donhang không
                 string checkSql = "SELECT COUNT(*) FROM Donhang WHERE ID_DonHang = @MaDonHang";
                 SqlParameter[] checkParameters = new SqlParameter[]
                 {
@@ -369,28 +372,55 @@ namespace Nhom12_dhti5a14hn.Controller
 
                 DataTable dt = Connect.readData(checkSql, checkParameters);
 
-                // Kiểm tra xem đơn hàng có tồn tại không
                 if (dt.Rows.Count > 0 && Convert.ToInt32(dt.Rows[0][0]) > 0)
                 {
-                    // Bước 1: Xóa chi tiết đơn hàng trong bảng ChiTietDonHang
-                    string deleteDetailSql = "DELETE FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang";
-                    SqlParameter[] deleteDetailParameters = new SqlParameter[]
+                    string checkPhanHoiSql = "SELECT COUNT(*) FROM PhanHoi WHERE ID_DonHang = @MaDonHang";
+                    SqlParameter[] checkPhanHoiParameters = new SqlParameter[]
                     {
                 new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
                     };
 
-                    Connect.NoneQuery(deleteDetailSql, deleteDetailParameters);
+                    DataTable phanHoiDt = Connect.readData(checkPhanHoiSql, checkPhanHoiParameters);
 
-                    // Bước 2: Xóa đơn hàng trong bảng Donhang
-                    string deleteOrderSql = "DELETE FROM Donhang WHERE ID_DonHang = @MaDonHang";
-                    SqlParameter[] deleteOrderParameters = new SqlParameter[]
+                    if (Convert.ToInt32(phanHoiDt.Rows[0][0]) > 0)
                     {
-                new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
-                    };
+                        DialogResult result = MessageBox.Show(
+                            "Đơn hàng này đã thanh toán và có thông tin phản hồi. Bạn có muốn xóa cả thông tin phản hồi không?",
+                            "Xác nhận xóa thông tin phản hồi",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Question
+                        );
 
-                    Connect.NoneQuery(deleteOrderSql, deleteOrderParameters);
+                        if (result == DialogResult.Yes)
+                        {
+                            string deletePhanHoiSql = "DELETE FROM PhanHoi WHERE ID_DonHang = @MaDonHang";
+                            SqlParameter[] deletePhanHoiParameters = new SqlParameter[]
+                            {
+                            new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                            };
 
-                    MessageBox.Show("Đơn hàng và chi tiết đơn hàng đã được xóa thành công.");
+                            Connect.NoneQuery(deletePhanHoiSql, deletePhanHoiParameters);
+                            string deleteDetailSql = "DELETE FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang";
+
+                            SqlParameter[] deleteDetailParameters = new SqlParameter[]
+                            {
+                                new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                            };
+
+                            Connect.NoneQuery(deleteDetailSql, deleteDetailParameters);
+
+                            string deleteOrderSql = "DELETE FROM Donhang WHERE ID_DonHang = @MaDonHang";
+                            SqlParameter[] deleteOrderParameters = new SqlParameter[]
+                            {
+                                new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                            };
+
+                            Connect.NoneQuery(deleteOrderSql, deleteOrderParameters);
+
+                            MessageBox.Show("Đơn hàng và chi tiết đơn hàng đã được xóa thành công.");
+                        }
+                    }
+
                 }
                 else
                 {
@@ -402,61 +432,71 @@ namespace Nhom12_dhti5a14hn.Controller
                 MessageBox.Show("Lỗi khi xóa đơn hàng: " + ex.Message);
             }
         }
+
         public void DeleteChiTietDonHang(int maDonHang)
         {
             try
             {
-                // Bước 1: Lấy mã chi tiết đơn hàng từ cột đầu tiên trong bảng display_qldh
-                string getChiTietSql = "SELECT TOP 1 ID_ChiTiet FROM display_qldh WHERE ID_DonHang = @MaDonHang";
+                if (IsOrderPaid(maDonHang))
+                {
+                    MessageBox.Show("Đơn hàng đã được thanh toán, không thể xoá chi tiết.");
+                    return;
+                }
+
+                string getChiTietSql = "SELECT TOP 1 ID FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang";
                 SqlParameter[] getChiTietParameters = new SqlParameter[]
                 {
-            new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                    new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
                 };
 
                 DataTable dt = Connect.readData(getChiTietSql, getChiTietParameters);
 
                 if (dt.Rows.Count > 0)
                 {
-                    // Lấy mã chi tiết đầu tiên
-                    int maChiTiet = Convert.ToInt32(dt.Rows[0]["ID_ChiTiet"]);
+                    int maChiTiet = Convert.ToInt32(dt.Rows[0]["ID"]);
 
-                    // Bước 2: Kiểm tra chi tiết đơn hàng có tồn tại không
-                    string checkSql = "SELECT COUNT(*) FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang AND ID_ChiTiet = @MaChiTiet";
+                    string checkSql = "SELECT COUNT(*) FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang AND ID = @MaChiTiet";
                     SqlParameter[] checkParameters = new SqlParameter[]
                     {
-                new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang },
-                new SqlParameter("@MaChiTiet", SqlDbType.Int) { Value = maChiTiet }
+                        new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang },
+                        new SqlParameter("@MaChiTiet", SqlDbType.Int) { Value = maChiTiet }
                     };
 
                     DataTable checkData = Connect.readData(checkSql, checkParameters);
 
-                    // Nếu chi tiết đơn hàng tồn tại, thực hiện xóa
                     if (checkData.Rows.Count > 0 && Convert.ToInt32(checkData.Rows[0][0]) > 0)
                     {
-                        // Bước 3: Lấy số lượng và giá tiền của chi tiết đơn hàng để tính toán tổng tiền
-                        string getDetailSql = "SELECT SoLuong, GiaTien FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang AND ID_ChiTiet = @MaChiTiet";
-                        DataTable detailData = Connect.readData(getDetailSql, checkParameters);
+                        string getDetailSql = "SELECT SoLuong, GiaBan FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang AND ID = @MaChiTiet";
+                        SqlParameter[] getDetailParameters = new SqlParameter[]
+                        {
+                            new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang },
+                            new SqlParameter("@MaChiTiet", SqlDbType.Int) { Value = maChiTiet }
+                        };
+
+                        DataTable detailData = Connect.readData(getDetailSql, getDetailParameters);
 
                         int soLuong = Convert.ToInt32(detailData.Rows[0]["SoLuong"]);
-                        decimal giaTien = Convert.ToDecimal(detailData.Rows[0]["GiaTien"]);
+                        decimal giaTien = Convert.ToDecimal(detailData.Rows[0]["GiaBan"]);
                         decimal totalAmount = soLuong * giaTien;
 
-                        // Bước 4: Xóa chi tiết đơn hàng
-                        string deleteDetailSql = "DELETE FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang AND ID_ChiTiet = @MaChiTiet";
-                        Connect.NoneQuery(deleteDetailSql, checkParameters);
+                        string deleteDetailSql = "DELETE FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang AND ID = @MaChiTiet";
+                        Connect.NoneQuery(deleteDetailSql, getDetailParameters);
 
-                        // Bước 5: Cập nhật lại tổng tiền của đơn hàng sau khi xóa chi tiết
-                        string getTotalAmountSql = "SELECT SUM(SoLuong * GiaTien) FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang";
-                        decimal newTotalAmount = Convert.ToDecimal(Connect.readData(getTotalAmountSql, new SqlParameter[] { new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang } }).Rows[0][0]);
+                        string getTotalAmountSql = "SELECT SUM(SoLuong * GiaBan) FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang";
+                        SqlParameter[] getTotalAmountParameters = new SqlParameter[]
+                        {
+                            new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                        };
+
+                        decimal newTotalAmount = Convert.ToDecimal(Connect.readData(getTotalAmountSql, getTotalAmountParameters).Rows[0][0]);
 
                         string updateDonHangSql = "UPDATE Donhang SET TongTien = @TongTien WHERE ID_DonHang = @MaDonHang";
                         SqlParameter[] updateParameters = new SqlParameter[]
                         {
-                    new SqlParameter("@TongTien", SqlDbType.Decimal) { Value = newTotalAmount },
-                    new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                            new SqlParameter("@TongTien", SqlDbType.Decimal) { Value = newTotalAmount },
+                            new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
                         };
 
-                        // Cập nhật tổng tiền cho đơn hàng
                         Connect.NoneQuery(updateDonHangSql, updateParameters);
 
                         MessageBox.Show("Chi tiết đơn hàng đã được xóa và tổng tiền của đơn hàng đã được cập nhật.");
@@ -468,7 +508,7 @@ namespace Nhom12_dhti5a14hn.Controller
                 }
                 else
                 {
-                    MessageBox.Show("Không tìm thấy chi tiết đơn hàng trong bảng display_qldh.");
+                    MessageBox.Show("Không tìm thấy chi tiết đơn hàng trong bảng Chi tiết đơn hàng.");
                 }
             }
             catch (Exception ex)
@@ -479,16 +519,13 @@ namespace Nhom12_dhti5a14hn.Controller
 
         public DataTable GetDonHangByMaDonHang(int maDonHang)
         {
-            // Câu lệnh SQL để tìm kiếm đơn hàng theo mã đơn hàng
             string sql = "SELECT * FROM Donhang WHERE ID_DonHang = @MaDonHang";
 
-            // Các tham số để thay thế trong câu lệnh SQL
             SqlParameter[] parameters = new SqlParameter[]
             {
         new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
             };
 
-            // Thực hiện câu lệnh truy vấn và trả về kết quả dưới dạng DataTable
             DataTable dt = Connect.readData(sql, parameters);
 
             return dt;
@@ -516,5 +553,67 @@ namespace Nhom12_dhti5a14hn.Controller
             return Connect.readData(sql, parameters);
         }
 
+        public void MarkOrderAsPaid(int maDonHang)
+        {
+            try
+            {
+                string sql = "UPDATE Donhang SET TrangThaiThanhToan = 1 WHERE ID_DonHang = @MaDonHang";
+                SqlParameter[] parameters = new SqlParameter[]
+                {
+                new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                };
+
+                Connect.NoneQuery(sql, parameters);
+                MessageBox.Show("Đơn hàng đã được đánh dấu là đã thanh toán.");
+
+                GetAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi đánh dấu đơn hàng là đã thanh toán: " + ex.Message);
+            }
+        }
+
+        public void MarkOrderAsUnpaid(int maDonHang)
+        {
+            try
+            {
+                string sql = "UPDATE Donhang SET TrangThaiThanhToan = 0 WHERE ID_DonHang = @MaDonHang";
+                SqlParameter[] parameters = new SqlParameter[]
+                {
+            new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+                };
+
+                Connect.NoneQuery(sql, parameters);
+                MessageBox.Show("Đơn hàng đã được đánh dấu là chưa thanh toán.");
+
+                GetAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi đánh dấu đơn hàng là chưa thanh toán: " + ex.Message);
+            }
+        }
+
+        public bool IsOrderPaid(int maDonHang)
+        {
+            string sql = @"
+                            SELECT
+                                CASE
+                                    WHEN TrangThaiThanhToan = 1 OR EXISTS (SELECT 1 FROM PhanHoi WHERE ID_DonHang = @MaDonHang)
+                                    THEN 1
+                                    ELSE 0
+                                END AS IsPaid
+                            FROM Donhang
+                            WHERE ID_DonHang = @MaDonHang";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+        new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
+            };
+
+            DataTable dt = Connect.readData(sql, parameters);
+            return dt.Rows.Count > 0 && Convert.ToBoolean(dt.Rows[0]["IsPaid"]);
+        }
     }
 }

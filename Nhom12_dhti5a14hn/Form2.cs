@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Nhom12_dhti5a14hn
 {
     public partial class Form2 : Form
     {
-        QuanLyThuoc thuoc = new QuanLyThuoc();
+        private QuanLyThuoc thuoc = new QuanLyThuoc();
+
         public Form2()
         {
             InitializeComponent();
@@ -26,29 +21,26 @@ namespace Nhom12_dhti5a14hn
             display_qlt.DataSource = thuoc.GetAllThuoc();
             HighlightThuoc();
         }
+
         private void Form2_Load(object sender, EventArgs e)
         {
             HighlightThuoc();
         }
+
         private void HighlightThuoc()
         {
-            foreach (DataGridViewRow row in display_qlt.Rows) // Assuming Display_thuoc is your DataGridView for Thuoc
+            foreach (DataGridViewRow row in display_qlt.Rows)
             {
-                // Check if SoLuong (quantity) is zero
                 if (row.Cells["SoLuong"].Value != null && int.TryParse(row.Cells["SoLuong"].Value.ToString(), out int soLuong) && soLuong == 0)
                 {
-                    // If quantity is zero, highlight the row in red
                     row.DefaultCellStyle.BackColor = Color.Red;
                 }
-                // Check if HanSuDung (expiration date) is today or in the past
                 else if (row.Cells["HanSuDung"].Value != null && DateTime.TryParse(row.Cells["HanSuDung"].Value.ToString(), out DateTime hanSuDung) && hanSuDung <= DateTime.Today)
                 {
-                    // If the expiration date is today or earlier, highlight the row in red
                     row.DefaultCellStyle.BackColor = Color.Red;
                 }
                 else
                 {
-                    // If neither condition is met, keep the row color default (e.g., white)
                     row.DefaultCellStyle.BackColor = Color.White;
                 }
             }
@@ -56,7 +48,7 @@ namespace Nhom12_dhti5a14hn
 
         private void ClearForm()
         {
-            txt_mathuoc.Clear();   
+            txt_mathuoc.Clear();
             txt_tenthuoc.Clear();
             txt_mancc.Clear();
             txt_loaithuoc.Clear();
@@ -69,8 +61,8 @@ namespace Nhom12_dhti5a14hn
 
         private void SearchThuoc()
         {
-            string tenThuoc = txt_tktenthuoc.Text; 
-            string loaiThuoc = txt_tkloaithuoc.Text; 
+            string tenThuoc = txt_tktenthuoc.Text;
+            string loaiThuoc = txt_tkloaithuoc.Text;
 
             display_qlt.DataSource = thuoc.SearchThuoc(tenThuoc, loaiThuoc);
             HighlightThuoc();
@@ -94,28 +86,24 @@ namespace Nhom12_dhti5a14hn
                 string tenThuoc = txt_tenthuoc.Text;
                 string maNhaCungCap = txt_mancc.Text;
                 string loaiThuoc = txt_loaithuoc.Text;
-                decimal giaNhap = decimal.Parse(txt_gianhap.Text); // Sử dụng decimal cho giá trị tiền tệ
+                decimal giaNhap = decimal.Parse(txt_gianhap.Text);
                 decimal giaBan = giaNhap * 1.15m;  // Tính giá bán = giá nhập + 15%
                 DateTime ngaySanXuat = dtp_nsx.Value;
                 DateTime hanSuDung = dtp_hsd.Value;
                 int soLuong = int.Parse(txt_sl.Text);
 
-                // Gọi phương thức thêm thuốc với giá bán đã tính
                 thuoc.CreateQuanLyThuoc(tenThuoc, maNhaCungCap, loaiThuoc, giaNhap, giaBan, ngaySanXuat, hanSuDung, soLuong);
 
                 MessageBox.Show("Thêm thuốc thành công!");
                 ClearForm();
                 LoadThuocData();
-
             }
             catch (FormatException formatEx)
             {
-                // Lỗi khi chuyển kiểu dữ liệu (ví dụ: nhập vào giá trị không phải số)
                 MessageBox.Show("Lỗi định dạng dữ liệu: " + formatEx.Message);
             }
             catch (Exception ex)
             {
-                // Lỗi chung khác
                 MessageBox.Show("Đã xảy ra lỗi: " + ex.Message);
             }
         }
@@ -139,7 +127,6 @@ namespace Nhom12_dhti5a14hn
 
         private void btn_sua_Click(object sender, EventArgs e)
         {
-            // Kiểm tra dữ liệu đầu vào
             if (string.IsNullOrEmpty(txt_mathuoc.Text) || string.IsNullOrEmpty(txt_tenthuoc.Text) ||
                 string.IsNullOrEmpty(txt_mancc.Text) || string.IsNullOrEmpty(txt_loaithuoc.Text) ||
                 string.IsNullOrEmpty(txt_gianhap.Text) || string.IsNullOrEmpty(txt_sl.Text))
@@ -150,32 +137,28 @@ namespace Nhom12_dhti5a14hn
 
             try
             {
-                int maThuoc = int.Parse(txt_mathuoc.Text);   // Mã thuốc
-                string tenThuoc = txt_tenthuoc.Text;          // Tên thuốc
-                string maNhaCungCap = txt_mancc.Text;         // Mã nhà cung cấp
-                string loaiThuoc = txt_loaithuoc.Text;        // Loại thuốc
-                decimal giaNhap = decimal.Parse(txt_gianhap.Text); // Giá nhập (decimal cho chính xác)
+                int maThuoc = int.Parse(txt_mathuoc.Text);
+                string tenThuoc = txt_tenthuoc.Text;
+                string maNhaCungCap = txt_mancc.Text;
+                string loaiThuoc = txt_loaithuoc.Text;
+                decimal giaNhap = decimal.Parse(txt_gianhap.Text);
                 decimal giaBan = giaNhap * 1.15m;             // Giá bán = Giá nhập + 15%
-                DateTime ngaySanXuat = dtp_nsx.Value;         // Ngày sản xuất
-                DateTime hanSuDung = dtp_hsd.Value;           // Hạn sử dụng
-                int soLuong = int.Parse(txt_sl.Text);         // Số lượng
+                DateTime ngaySanXuat = dtp_nsx.Value;
+                DateTime hanSuDung = dtp_hsd.Value;
+                int soLuong = int.Parse(txt_sl.Text);
 
-                // Gọi phương thức cập nhật thuốc với giá bán đã tính
                 thuoc.UpdateQuanLyThuoc(maThuoc, tenThuoc, maNhaCungCap, loaiThuoc, giaNhap, giaBan, ngaySanXuat, hanSuDung, soLuong);
 
                 MessageBox.Show("Cập nhật thuốc thành công!");
                 ClearForm();
                 LoadThuocData();
-
             }
             catch (FormatException formatEx)
             {
-                // Xử lý lỗi khi chuyển đổi kiểu dữ liệu không hợp lệ (vd: giá trị không phải số)
                 MessageBox.Show("Lỗi định dạng dữ liệu: " + formatEx.Message);
             }
             catch (Exception ex)
             {
-                // Xử lý lỗi chung
                 MessageBox.Show("Đã xảy ra lỗi: " + ex.Message);
             }
         }
@@ -192,7 +175,6 @@ namespace Nhom12_dhti5a14hn
             {
                 int maThuoc = int.Parse(txt_mathuoc.Text);
 
-                // Gọi phương thức xóa thuốc
                 thuoc.DeleteQuanLyThuoc(maThuoc);
 
                 MessageBox.Show("Xóa thuốc thành công!");
@@ -223,6 +205,4 @@ namespace Nhom12_dhti5a14hn
             this.Close();
         }
     }
-    
 }
-

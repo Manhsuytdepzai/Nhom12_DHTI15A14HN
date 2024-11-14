@@ -34,6 +34,7 @@
             this.display_qldh = new System.Windows.Forms.DataGridView();
             this.dtp_ngaylaphd = new System.Windows.Forms.DateTimePicker();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.txt_sl = new System.Windows.Forms.TextBox();
             this.t = new System.Windows.Forms.Label();
             this.btn_xoact = new System.Windows.Forms.Button();
@@ -63,6 +64,7 @@
             this.btn_sua = new System.Windows.Forms.Button();
             this.btn_xoa = new System.Windows.Forms.Button();
             this.xuat = new System.Windows.Forms.Button();
+            this.fix = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.display_qldh)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.display_dh)).BeginInit();
@@ -123,6 +125,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.fix);
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.txt_sl);
             this.panel1.Controls.Add(this.t);
             this.panel1.Controls.Add(this.btn_xoact);
@@ -150,6 +154,17 @@
             this.panel1.Size = new System.Drawing.Size(528, 586);
             this.panel1.TabIndex = 19;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(388, 349);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(121, 28);
+            this.button1.TabIndex = 32;
+            this.button1.Text = "Completed";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // txt_sl
             // 
@@ -250,21 +265,21 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(51, 1);
+            this.label5.Location = new System.Drawing.Point(84, 1);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(425, 46);
+            this.label5.Size = new System.Drawing.Size(316, 46);
             this.label5.TabIndex = 20;
-            this.label5.Text = "Thêm chi tiết hoá đơn";
+            this.label5.Text = "Chi tiết hoá đơn";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(126, 368);
+            this.label9.Location = new System.Drawing.Point(150, 358);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(289, 46);
+            this.label9.Size = new System.Drawing.Size(179, 46);
             this.label9.TabIndex = 20;
-            this.label9.Text = "Thêm hoá đơn";
+            this.label9.Text = "Hoá đơn";
             // 
             // txt_tenthuoc
             // 
@@ -437,6 +452,17 @@
             this.xuat.UseVisualStyleBackColor = true;
             this.xuat.Click += new System.EventHandler(this.xuat_Click);
             // 
+            // fix
+            // 
+            this.fix.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fix.Location = new System.Drawing.Point(388, 383);
+            this.fix.Name = "fix";
+            this.fix.Size = new System.Drawing.Size(121, 28);
+            this.fix.TabIndex = 33;
+            this.fix.Text = "Fix";
+            this.fix.UseVisualStyleBackColor = true;
+            this.fix.Click += new System.EventHandler(this.fix_Click);
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -503,5 +529,7 @@
         private System.Windows.Forms.TextBox txt_sl;
         private System.Windows.Forms.Label t;
         private System.Windows.Forms.Button xuat;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button fix;
     }
 }

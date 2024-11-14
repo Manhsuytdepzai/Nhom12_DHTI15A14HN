@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using Nhom12_dhti5a14hn.Connect;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using System.Windows.Forms;
-using Nhom12_dhti5a14hn.Connect;
 
 namespace Nhom12_dhti5a14hn
 {
@@ -14,7 +9,8 @@ namespace Nhom12_dhti5a14hn
     {
         public class User
         {
-            connect ketnoi;
+            private connect ketnoi;
+
             public User()
             {
                 ketnoi = new connect();
@@ -30,7 +26,7 @@ namespace Nhom12_dhti5a14hn
                 };
                 DataTable dt = new DataTable();
                 dt = ketnoi.readData(sql, parameters);
-                if(dt != null)
+                if (dt != null)
                 {
                     Form2 form2 = new Form2();
                     form2.Show();

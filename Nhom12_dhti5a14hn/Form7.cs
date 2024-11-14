@@ -1,32 +1,25 @@
 ﻿using Nhom12_dhti5a14hn.Controller;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Nhom12_dhti5a14hn
 {
     public partial class Form7 : Form
     {
-        PhanHoi ph = new PhanHoi();
+        private PhanHoi ph = new PhanHoi();
+
         public Form7()
         {
             InitializeComponent();
+            display_ph.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
-
         }
 
         private void label3_Click(object sender, EventArgs e)
         {
-
         }
 
         private void Form7_Load(object sender, EventArgs e)
@@ -56,7 +49,6 @@ namespace Nhom12_dhti5a14hn
 
         private void display_ph_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void btn_back_Click(object sender, EventArgs e)

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.xuatthuoc = new System.Windows.Forms.Button();
             this.display_baocao = new System.Windows.Forms.DataGridView();
             this.thongke = new System.Windows.Forms.Button();
             this.btn_tkall = new System.Windows.Forms.Button();
@@ -37,6 +37,7 @@
             this.thuocall = new System.Windows.Forms.Button();
             this.tuoctn = new System.Windows.Forms.Button();
             this.btn_back = new System.Windows.Forms.Button();
+            this.xuathoadon = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.display_baocao)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.display)).BeginInit();
             this.SuspendLayout();
@@ -44,25 +45,27 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.MediumSeaGreen;
-            this.label1.Location = new System.Drawing.Point(451, 35);
+            this.label1.Location = new System.Drawing.Point(393, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(297, 38);
+            this.label1.Size = new System.Drawing.Size(337, 42);
             this.label1.TabIndex = 10;
             this.label1.Text = "Báo cáo thống kê ";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // button3
+            // xuatthuoc
             // 
-            this.button3.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button3.Location = new System.Drawing.Point(949, 556);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(124, 49);
-            this.button3.TabIndex = 12;
-            this.button3.Text = "Xuất ";
-            this.button3.UseVisualStyleBackColor = false;
+            this.xuatthuoc.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.xuatthuoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.xuatthuoc.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.xuatthuoc.Location = new System.Drawing.Point(767, 70);
+            this.xuatthuoc.Name = "xuatthuoc";
+            this.xuatthuoc.Size = new System.Drawing.Size(340, 49);
+            this.xuatthuoc.TabIndex = 12;
+            this.xuatthuoc.Text = "Xuất ra báo cáo trong ngày";
+            this.xuatthuoc.UseVisualStyleBackColor = false;
+            this.xuatthuoc.Click += new System.EventHandler(this.xuatthuoc_Click);
             // 
             // display_baocao
             // 
@@ -71,19 +74,20 @@
             this.display_baocao.Name = "display_baocao";
             this.display_baocao.RowHeadersWidth = 51;
             this.display_baocao.RowTemplate.Height = 24;
-            this.display_baocao.Size = new System.Drawing.Size(495, 361);
+            this.display_baocao.Size = new System.Drawing.Size(537, 361);
             this.display_baocao.TabIndex = 13;
+            this.display_baocao.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.display_baocao_CellContentClick);
             // 
             // thongke
             // 
             this.thongke.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.thongke.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.thongke.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thongke.Location = new System.Drawing.Point(102, 556);
+            this.thongke.Location = new System.Drawing.Point(42, 511);
             this.thongke.Name = "thongke";
-            this.thongke.Size = new System.Drawing.Size(124, 49);
+            this.thongke.Size = new System.Drawing.Size(357, 49);
             this.thongke.TabIndex = 14;
-            this.thongke.Text = "Trong ngày";
+            this.thongke.Text = "Thống kê hoá đơn ttrong ngày";
             this.thongke.UseVisualStyleBackColor = false;
             this.thongke.Click += new System.EventHandler(this.thongke_Click);
             // 
@@ -92,22 +96,22 @@
             this.btn_tkall.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.btn_tkall.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_tkall.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_tkall.Location = new System.Drawing.Point(303, 556);
+            this.btn_tkall.Location = new System.Drawing.Point(42, 579);
             this.btn_tkall.Name = "btn_tkall";
-            this.btn_tkall.Size = new System.Drawing.Size(124, 49);
+            this.btn_tkall.Size = new System.Drawing.Size(357, 49);
             this.btn_tkall.TabIndex = 15;
-            this.btn_tkall.Text = "Tất cả";
+            this.btn_tkall.Text = "Thống kê tất cả hoá đơn";
             this.btn_tkall.UseVisualStyleBackColor = false;
             this.btn_tkall.Click += new System.EventHandler(this.btn_tkall_Click);
             // 
             // display
             // 
             this.display.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.display.Location = new System.Drawing.Point(560, 125);
+            this.display.Location = new System.Drawing.Point(599, 125);
             this.display.Name = "display";
             this.display.RowHeadersWidth = 51;
             this.display.RowTemplate.Height = 24;
-            this.display.Size = new System.Drawing.Size(547, 361);
+            this.display.Size = new System.Drawing.Size(508, 361);
             this.display.TabIndex = 16;
             // 
             // thuocall
@@ -115,11 +119,11 @@
             this.thuocall.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.thuocall.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.thuocall.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thuocall.Location = new System.Drawing.Point(708, 556);
+            this.thuocall.Location = new System.Drawing.Point(599, 579);
             this.thuocall.Name = "thuocall";
-            this.thuocall.Size = new System.Drawing.Size(124, 49);
+            this.thuocall.Size = new System.Drawing.Size(455, 49);
             this.thuocall.TabIndex = 18;
-            this.thuocall.Text = "Tất cả";
+            this.thuocall.Text = "Thống kê tất cả thuốc bán ra ";
             this.thuocall.UseVisualStyleBackColor = false;
             this.thuocall.Click += new System.EventHandler(this.thuocall_Click);
             // 
@@ -128,11 +132,11 @@
             this.tuoctn.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.tuoctn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tuoctn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.tuoctn.Location = new System.Drawing.Point(507, 556);
+            this.tuoctn.Location = new System.Drawing.Point(599, 511);
             this.tuoctn.Name = "tuoctn";
-            this.tuoctn.Size = new System.Drawing.Size(124, 49);
+            this.tuoctn.Size = new System.Drawing.Size(455, 49);
             this.tuoctn.TabIndex = 17;
-            this.tuoctn.Text = "Trong ngày";
+            this.tuoctn.Text = "Thống kê số lượng thuốc bán ra trong ngày";
             this.tuoctn.UseVisualStyleBackColor = false;
             this.tuoctn.Click += new System.EventHandler(this.tuoctn_Click);
             // 
@@ -147,11 +151,25 @@
             this.btn_back.UseVisualStyleBackColor = true;
             this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
             // 
+            // xuathoadon
+            // 
+            this.xuathoadon.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.xuathoadon.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.xuathoadon.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.xuathoadon.Location = new System.Drawing.Point(42, 70);
+            this.xuathoadon.Name = "xuathoadon";
+            this.xuathoadon.Size = new System.Drawing.Size(326, 49);
+            this.xuathoadon.TabIndex = 45;
+            this.xuathoadon.Text = "Xuất ra thống kê bán hàng";
+            this.xuathoadon.UseVisualStyleBackColor = false;
+            this.xuathoadon.Click += new System.EventHandler(this.xuathoadon_Click);
+            // 
             // Form6
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1148, 707);
+            this.Controls.Add(this.xuathoadon);
             this.Controls.Add(this.btn_back);
             this.Controls.Add(this.thuocall);
             this.Controls.Add(this.tuoctn);
@@ -160,9 +178,10 @@
             this.Controls.Add(this.thongke);
             this.Controls.Add(this.display_baocao);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.xuatthuoc);
             this.Name = "Form6";
             this.Text = "Form6";
+            this.Load += new System.EventHandler(this.Form6_Load);
             ((System.ComponentModel.ISupportInitialize)(this.display_baocao)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.display)).EndInit();
             this.ResumeLayout(false);
@@ -172,7 +191,7 @@
 
         #endregion
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button xuatthuoc;
         private System.Windows.Forms.DataGridView display_baocao;
         private System.Windows.Forms.Button thongke;
         private System.Windows.Forms.Button btn_tkall;
@@ -180,5 +199,6 @@
         private System.Windows.Forms.Button thuocall;
         private System.Windows.Forms.Button tuoctn;
         private System.Windows.Forms.Button btn_back;
+        private System.Windows.Forms.Button xuathoadon;
     }
 }
