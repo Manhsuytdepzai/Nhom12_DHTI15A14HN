@@ -18,20 +18,45 @@ namespace Nhom12_dhti5a14hn
             InitializeComponent();
             display_qlt.DataSource = thuoc.GetAllThuoc();
             txt_giaban.Enabled = false;
+            HighlightThuoc();
         }
 
         private void LoadThuocData()
         {
             display_qlt.DataSource = thuoc.GetAllThuoc();
+            HighlightThuoc();
         }
         private void Form2_Load(object sender, EventArgs e)
         {
-
+            HighlightThuoc();
+        }
+        private void HighlightThuoc()
+        {
+            foreach (DataGridViewRow row in display_qlt.Rows) // Assuming Display_thuoc is your DataGridView for Thuoc
+            {
+                // Check if SoLuong (quantity) is zero
+                if (row.Cells["SoLuong"].Value != null && int.TryParse(row.Cells["SoLuong"].Value.ToString(), out int soLuong) && soLuong == 0)
+                {
+                    // If quantity is zero, highlight the row in red
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+                // Check if HanSuDung (expiration date) is today or in the past
+                else if (row.Cells["HanSuDung"].Value != null && DateTime.TryParse(row.Cells["HanSuDung"].Value.ToString(), out DateTime hanSuDung) && hanSuDung <= DateTime.Today)
+                {
+                    // If the expiration date is today or earlier, highlight the row in red
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+                else
+                {
+                    // If neither condition is met, keep the row color default (e.g., white)
+                    row.DefaultCellStyle.BackColor = Color.White;
+                }
+            }
         }
 
         private void ClearForm()
         {
-            
+            txt_mathuoc.Clear();   
             txt_tenthuoc.Clear();
             txt_mancc.Clear();
             txt_loaithuoc.Clear();
@@ -48,6 +73,7 @@ namespace Nhom12_dhti5a14hn
             string loaiThuoc = txt_tkloaithuoc.Text; 
 
             display_qlt.DataSource = thuoc.SearchThuoc(tenThuoc, loaiThuoc);
+            HighlightThuoc();
         }
 
         private void btn_them_Click(object sender, EventArgs e)
@@ -79,7 +105,7 @@ namespace Nhom12_dhti5a14hn
 
                 MessageBox.Show("Thêm thuốc thành công!");
                 ClearForm();
-                LoadThuocData();  // Load lại dữ liệu sau khi thêm
+                LoadThuocData();
 
             }
             catch (FormatException formatEx)
@@ -139,7 +165,7 @@ namespace Nhom12_dhti5a14hn
 
                 MessageBox.Show("Cập nhật thuốc thành công!");
                 ClearForm();
-                LoadThuocData();  // Load lại dữ liệu sau khi cập nhật
+                LoadThuocData();
 
             }
             catch (FormatException formatEx)
@@ -182,6 +208,12 @@ namespace Nhom12_dhti5a14hn
         private void btn_TK_Click(object sender, EventArgs e)
         {
             SearchThuoc();
+        }
+
+        private void reload_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+            display_qlt.DataSource = thuoc.GetAllThuoc();
         }
     }
     

@@ -141,7 +141,7 @@ namespace Nhom12_dhti5a14hn
                 }
 
                 // Call CreatDH with the additional soLuong parameter
-                dh.CreatDH(madh, math, tenth, gia, soLuong);
+                dh.CreateDH(madh, math, tenth, gia, soLuong);
 
                 // Display updated order data
                 display_qldh.DataSource = dh.GetAllBill();
@@ -269,7 +269,13 @@ namespace Nhom12_dhti5a14hn
                     MessageBox.Show("Giá bán không hợp lệ.");
                     return;
                 }
-                dh.UpdateChiTietDonHang(madh, math, tenth, gia);
+
+                if (!float.TryParse(txt_sl.Text, out float sl))
+                {
+                    MessageBox.Show("Mã đơn hàng không hợp lệ.");
+                    return;
+                }
+                dh.UpdateChiTietDonHang(madh, math, tenth, gia, sl);
                 display_qldh.DataSource = dh.GetAllBill();
             }
             catch (Exception ex)
