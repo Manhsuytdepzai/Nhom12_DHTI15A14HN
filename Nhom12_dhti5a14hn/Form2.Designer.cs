@@ -59,6 +59,7 @@
             this.txt_mancc = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.reload = new System.Windows.Forms.Button();
+            this.btn_back = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.display_qlt)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -326,9 +327,9 @@
             this.groupBox1.Controls.Add(this.btn_them);
             this.groupBox1.Controls.Add(this.txt_mathuoc);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(24, 26);
+            this.groupBox1.Location = new System.Drawing.Point(24, 40);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(540, 603);
+            this.groupBox1.Size = new System.Drawing.Size(540, 589);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Quản Lý Thuốc";
@@ -389,11 +390,23 @@
             this.reload.UseVisualStyleBackColor = true;
             this.reload.Click += new System.EventHandler(this.reload_Click);
             // 
+            // btn_back
+            // 
+            this.btn_back.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_back.Location = new System.Drawing.Point(12, 12);
+            this.btn_back.Name = "btn_back";
+            this.btn_back.Size = new System.Drawing.Size(74, 30);
+            this.btn_back.TabIndex = 18;
+            this.btn_back.Text = "<";
+            this.btn_back.UseVisualStyleBackColor = true;
+            this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1148, 664);
+            this.Controls.Add(this.btn_back);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
@@ -443,5 +456,6 @@
         private System.Windows.Forms.TextBox txt_sl;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button reload;
+        private System.Windows.Forms.Button btn_back;
     }
 }

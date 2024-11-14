@@ -34,17 +34,13 @@ namespace Nhom12_dhti5a14hn.Controller
         }
         public void UpdateDonHang(int maDonHang, DateTime ngayDatHang, string soDienThoai, string tenKhachHang)
         {
-            // Kiểm tra xem khách hàng đã có trong bảng KhachHang chưa
             string checkCustomerSql = "SELECT COUNT(*) FROM KhachHang WHERE SoDienThoai = @SoDienThoai";
             SqlParameter[] checkCustomerParameters = new SqlParameter[]
             {
                 new SqlParameter("@SoDienThoai", SqlDbType.VarChar, 20) { Value = soDienThoai }
             };
 
-            // Lấy kết quả trả về từ câu lệnh kiểm tra khách hàng
             DataTable customerDt = Connect.readData(checkCustomerSql, checkCustomerParameters);
-
-            // Nếu khách hàng chưa tồn tại, thêm khách hàng mới vào bảng KhachHang
             if (customerDt.Rows.Count > 0 && Convert.ToInt32(customerDt.Rows[0][0]) == 0)
             {
                 string insertCustomerSql = "INSERT INTO KhachHang (TenKhachHang, SoDienThoai) VALUES (@TenKhachHang, @SoDienThoai)";
@@ -54,30 +50,23 @@ namespace Nhom12_dhti5a14hn.Controller
             new SqlParameter("@SoDienThoai", SqlDbType.VarChar, 20) { Value = soDienThoai }
                 };
 
-                // Thực hiện câu lệnh thêm khách hàng vào bảng KhachHang
                 Connect.NoneQuery(insertCustomerSql, insertCustomerParameters);
                 MessageBox.Show("Khách hàng mới đã được thêm thành công!");
             }
-
-            // Kiểm tra xem mã đơn hàng có tồn tại trong bảng Donhang không
             string checkSql = "SELECT COUNT(*) FROM Donhang WHERE ID_DonHang = @MaDonHang";
             SqlParameter[] checkParameters = new SqlParameter[]
             {
         new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
             };
 
-            // Lấy kết quả trả về từ câu lệnh kiểm tra
             DataTable dt = Connect.readData(checkSql, checkParameters);
 
-            // Kiểm tra xem có dữ liệu trả về không và xử lý
             if (dt.Rows.Count > 0 && Convert.ToInt32(dt.Rows[0][0]) > 0)
             {
-                // Nếu mã đơn hàng đã tồn tại, thông báo cho người dùng
                 MessageBox.Show("Mã đơn hàng này đã tồn tại. Vui lòng chọn mã khác.");
             }
             else
             {
-                // Nếu mã đơn hàng chưa tồn tại, tiến hành thêm mới đơn hàng
                 string sql = "INSERT INTO Donhang (ID_DonHang, NgayDatHang, TongTien, SoDienThoai, TenKhachHang) " +
                              "VALUES (@MaDonHang, @NgayDatHang, 0, @SoDienThoai, @TenKhachHang)";
 
@@ -89,7 +78,6 @@ namespace Nhom12_dhti5a14hn.Controller
             new SqlParameter("@TenKhachHang", SqlDbType.VarChar, 100) { Value = tenKhachHang }
                 };
 
-                // Gọi phương thức NoneQuery để thực hiện câu lệnh
                 Connect.NoneQuery(sql, parameters);
                 MessageBox.Show("Đơn hàng đã được thêm thành công!");
             }
@@ -101,14 +89,12 @@ namespace Nhom12_dhti5a14hn.Controller
         {
             try
             {
-                // Bước 1: Kiểm tra mã đơn hàng có tồn tại trong bảng HoaDon hay không
                 string checkHoaDonSql = "SELECT COUNT(*) FROM Donhang WHERE ID_DonHang = @MaDonHang";
                 SqlParameter[] checkHoaDonParams = new SqlParameter[]
                 {
             new SqlParameter("@MaDonHang", SqlDbType.Int) { Value = maDonHang }
                 };
 
-                // Kiểm tra kết quả
                 DataTable checkHoaDonResult = Connect.readData(checkHoaDonSql, checkHoaDonParams);
                 if (Convert.ToInt32(checkHoaDonResult.Rows[0][0]) == 0)
                 {
@@ -116,7 +102,6 @@ namespace Nhom12_dhti5a14hn.Controller
                     return;
                 }
 
-                // Bước 2: Kiểm tra số lượng thuốc trong kho
                 string checkThuocSql = "SELECT SoLuong FROM Thuoc WHERE MaThuoc = @MaThuoc";
                 SqlParameter[] checkThuocParams = new SqlParameter[]
                 {
@@ -128,7 +113,6 @@ namespace Nhom12_dhti5a14hn.Controller
                 {
                     float soLuongTrongKho = Convert.ToSingle(thuocData.Rows[0]["SoLuong"]);
 
-                    // Nếu số lượng yêu cầu lớn hơn số lượng trong kho, trả thông báo và dừng lại
                     if (soLuong > soLuongTrongKho)
                     {
                         MessageBox.Show("Số lượng thuốc yêu cầu vượt quá số lượng hiện có trong kho.");
@@ -141,7 +125,6 @@ namespace Nhom12_dhti5a14hn.Controller
                     return;
                 }
 
-                // Bước 3: Thêm một hàng mới vào ChiTietDonHang với Soluong
                 string sqlInsert = "INSERT INTO ChiTietDonHang (ID_DonHang, ID_Thuoc, TenThuoc, GiaBan, Soluong) " +
                                    "VALUES (@MaDonHang, @MaThuoc, @TenThuoc, @GiaBan, @Soluong)";
 
@@ -156,7 +139,6 @@ namespace Nhom12_dhti5a14hn.Controller
 
                 Connect.NoneQuery(sqlInsert, insertParameters);
 
-                // Bước 4: Cập nhật TongTien trong bảng Donhang dựa trên GiaBan * Soluong
                 string sqlUpdateTongTien = "UPDATE Donhang SET TongTien = (SELECT SUM(GiaBan * Soluong) FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang) " +
                                            "WHERE ID_DonHang = @MaDonHang";
 
@@ -167,7 +149,6 @@ namespace Nhom12_dhti5a14hn.Controller
 
                 Connect.NoneQuery(sqlUpdateTongTien, updateParameters);
 
-                // Bước 5: Cập nhật số lượng thuốc trong bảng Thuoc, trừ đi số lượng đã đặt
                 string sqlUpdateThuoc = "UPDATE Thuoc SET SoLuong = SoLuong - @SoLuong WHERE MaThuoc = @MaThuoc";
                 SqlParameter[] updateThuocParams = new SqlParameter[]
                 {
@@ -222,7 +203,6 @@ namespace Nhom12_dhti5a14hn.Controller
         {
             try
             {
-                // Bước 1: Kiểm tra số lượng thuốc hiện có trong kho
                 string checkThuocSql = "SELECT SoLuong FROM Thuoc WHERE MaThuoc = @MaThuoc";
                 SqlParameter[] checkThuocParams = new SqlParameter[]
                 {
@@ -234,7 +214,6 @@ namespace Nhom12_dhti5a14hn.Controller
                 {
                     float soLuongTrongKho = Convert.ToSingle(thuocData.Rows[0]["SoLuong"]);
 
-                    // Nếu số lượng yêu cầu lớn hơn số lượng trong kho, trả thông báo và dừng lại
                     if (soLuongMoi > soLuongTrongKho)
                     {
                         MessageBox.Show("Số lượng thuốc yêu cầu vượt quá số lượng hiện có trong kho.");
@@ -247,7 +226,6 @@ namespace Nhom12_dhti5a14hn.Controller
                     return;
                 }
 
-                // Bước 2: Lấy số lượng cũ trong ChiTietDonHang để tính chênh lệch
                 string checkSql = "SELECT Soluong FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang AND ID_Thuoc = @MaThuoc";
                 SqlParameter[] checkParameters = new SqlParameter[]
                 {
@@ -261,7 +239,6 @@ namespace Nhom12_dhti5a14hn.Controller
                 {
                     float soLuongCu = Convert.ToSingle(dt.Rows[0]["Soluong"]);
 
-                    // Bước 3: Cập nhật thông tin chi tiết đơn hàng
                     string updateSql = "UPDATE ChiTietDonHang SET TenThuoc = @TenThuoc, GiaBan = @GiaBan, Soluong = @SoLuongMoi " +
                                        "WHERE ID_DonHang = @MaDonHang AND ID_Thuoc = @MaThuoc";
 
@@ -276,7 +253,6 @@ namespace Nhom12_dhti5a14hn.Controller
 
                     Connect.NoneQuery(updateSql, updateParameters);
 
-                    // Bước 4: Cập nhật số lượng thuốc trong bảng Thuoc dựa trên sự thay đổi số lượng
                     float chenhLechSoLuong = soLuongCu - soLuongMoi;
                     string updateThuocSql = "UPDATE Thuoc SET SoLuong = SoLuong + @ChenhLechSoLuong WHERE ID_Thuoc = @MaThuoc";
 
@@ -288,7 +264,6 @@ namespace Nhom12_dhti5a14hn.Controller
 
                     Connect.NoneQuery(updateThuocSql, updateThuocParams);
 
-                    // Bước 5: Cập nhật lại tổng tiền trong bảng Donhang
                     string sqlUpdateTongTien = "UPDATE Donhang SET TongTien = " +
                                                "(SELECT ISNULL(SUM(GiaBan * Soluong), 0) FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang) " +
                                                "WHERE ID_DonHang = @MaDonHang";
@@ -319,7 +294,6 @@ namespace Nhom12_dhti5a14hn.Controller
         {
             try
             {
-                // Kiểm tra xem mã đơn hàng có tồn tại không
                 string checkSql = "SELECT COUNT(*) FROM Donhang WHERE ID_DonHang = @MaDonHang";
                 SqlParameter[] checkParameters = new SqlParameter[]
                 {
@@ -330,7 +304,6 @@ namespace Nhom12_dhti5a14hn.Controller
 
                 if (dt.Rows.Count > 0 && Convert.ToInt32(dt.Rows[0][0]) > 0)
                 {
-                    // Lấy tổng tiền từ bảng ChiTietDonHang
                     string sqlGetTongTien = "SELECT SUM(GiaBan) FROM ChiTietDonHang WHERE ID_DonHang = @MaDonHang";
                     SqlParameter[] totalParameters = new SqlParameter[]
                     {
