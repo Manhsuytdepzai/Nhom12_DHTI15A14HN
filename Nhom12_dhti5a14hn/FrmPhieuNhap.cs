@@ -1,28 +1,23 @@
 ﻿using Nhom12_dhti5a14hn.Connect;
 using Nhom12_dhti5a14hn.Controller;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Nhom12_dhti5a14hn
 {
     public partial class FrmPhieuNhap : Form
     {
-        PhieuNhap pn = new PhieuNhap();
-        ChiTietPhieuNhap ctpn = new ChiTietPhieuNhap();
+        private PhieuNhap pn = new PhieuNhap();
+        private ChiTietPhieuNhap ctpn = new ChiTietPhieuNhap();
+
         public FrmPhieuNhap()
         {
             InitializeComponent();
             txt_tt.Enabled = false;
             txt_mapn.Enabled = false;
-            
+            display_pn.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void btn_them_Click(object sender, EventArgs e)
@@ -87,12 +82,14 @@ namespace Nhom12_dhti5a14hn
                 MessageBox.Show("Lỗi khi sửa phiếu nhập: " + ex.Message);
             }
         }
+
         public void Clear()
         {
             txt_mapn.Clear();
             txt_mancc.Clear();
             txt_tt.Clear();
         }
+
         private void btn_xoact_Click(object sender, EventArgs e)
         {
             try
@@ -139,6 +136,7 @@ namespace Nhom12_dhti5a14hn
                 MessageBox.Show("Đã xảy ra lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void LoadChiTietPhieuNhap(int maPN)
         {
             string sql = "SELECT * FROM ChiTietPhieuNhap WHERE ID_PhieuNhap = @MaPN";
@@ -176,7 +174,6 @@ namespace Nhom12_dhti5a14hn
 
         private void display_ctpn_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void display_ctpn_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -209,7 +206,7 @@ namespace Nhom12_dhti5a14hn
                 decimal donGia = decimal.Parse(txtDonGia.Text);
                 int idPhieuNhap = int.Parse(txt_idpn.Text);
                 int idCTPN = int.Parse(txtMactpn.Text);
-                ctpn.UpdateChiTietPhieuNhap(idCTPN, soLuong, idThuoc, idPhieuNhap,donGia);
+                ctpn.UpdateChiTietPhieuNhap(idCTPN, soLuong, idThuoc, idPhieuNhap, donGia);
                 display_ctpn.DataSource = ctpn.GetAllCTPN();
                 display_pn.DataSource = pn.GetAllPn();
                 txtSoLuong.Clear();
@@ -236,9 +233,9 @@ namespace Nhom12_dhti5a14hn
         {
             try
             {
-                int idctpn= int.Parse(txtMactpn.Text);
+                int idctpn = int.Parse(txtMactpn.Text);
                 int idpn = int.Parse(txt_idpn.Text);
-                ctpn.DeleteChiTietPhieuNhap(idctpn,idpn);
+                ctpn.DeleteChiTietPhieuNhap(idctpn, idpn);
                 display_ctpn.DataSource = ctpn.GetAllCTPN();
                 display_pn.DataSource = pn.GetAllPn();
                 txtSoLuong.Clear();
@@ -269,12 +266,10 @@ namespace Nhom12_dhti5a14hn
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void btn_back_Click(object sender, EventArgs e)

@@ -1,18 +1,14 @@
 ﻿using Nhom12_dhti5a14hn.Connect;
 using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Nhom12_dhti5a14hn.Controller
 {
     internal class NCC
     {
-        connect Connect;
+        private connect Connect;
 
         public NCC()
         {
@@ -24,6 +20,7 @@ namespace Nhom12_dhti5a14hn.Controller
             string sql = "select * from NCC";
             return Connect.readData(sql);
         }
+
         public void AddNCC(string tenNhaCungCap, string diaChi)
         {
             string sql = "INSERT INTO [dbo].[NCC] (TenNhaCungCap, DiaChi) VALUES (@TenNhaCungCap, @DiaChi)";
@@ -35,7 +32,7 @@ namespace Nhom12_dhti5a14hn.Controller
 
             try
             {
-                Connect.NoneQuery(sql, para); // Thực thi câu lệnh thêm dữ liệu vào cơ sở dữ liệu
+                Connect.NoneQuery(sql, para);
                 MessageBox.Show("Thêm nhà cung cấp thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -56,7 +53,7 @@ namespace Nhom12_dhti5a14hn.Controller
 
             try
             {
-                Connect.NoneQuery(sql, para); // Thực thi câu lệnh cập nhật
+                Connect.NoneQuery(sql, para);
                 MessageBox.Show("Cập nhật nhà cung cấp thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -65,24 +62,20 @@ namespace Nhom12_dhti5a14hn.Controller
             }
         }
 
-
         public void DeleteNCC(int idNhaCungCap)
         {
-            // Xoá chi tiết phiếu nhập liên quan đến nhà cung cấp
             string deleteDetailsSql = "DELETE FROM [dbo].[ChiTietPhieuNhap] WHERE ID_PhieuNhap IN (SELECT ID_PhieuNhap FROM [dbo].[PhieuNhap] WHERE ID_NhaCungCap = @ID_NhaCungCap)";
             SqlParameter[] paraDeleteDetails = new SqlParameter[]
             {
                 new SqlParameter("@ID_NhaCungCap", SqlDbType.Int) { Value = idNhaCungCap }
             };
 
-            // Xoá phiếu nhập liên quan
             string deletePhieuNhapSql = "DELETE FROM [dbo].[PhieuNhap] WHERE ID_NhaCungCap = @ID_NhaCungCap";
             SqlParameter[] paraDeletePhieuNhap = new SqlParameter[]
             {
                 new SqlParameter("@ID_NhaCungCap", SqlDbType.Int) { Value = idNhaCungCap }
             };
 
-            // Xoá nhà cung cấp
             string deleteNCCSql = "DELETE FROM [dbo].[NCC] WHERE ID_NhaCungCap = @ID_NhaCungCap";
             SqlParameter[] paraDeleteNCC = new SqlParameter[]
             {
@@ -91,13 +84,10 @@ namespace Nhom12_dhti5a14hn.Controller
 
             try
             {
-                // Xoá chi tiết phiếu nhập
                 Connect.NoneQuery(deleteDetailsSql, paraDeleteDetails);
 
-                // Xoá phiếu nhập
                 Connect.NoneQuery(deletePhieuNhapSql, paraDeletePhieuNhap);
 
-                // Xoá nhà cung cấp
                 Connect.NoneQuery(deleteNCCSql, paraDeleteNCC);
 
                 MessageBox.Show("Xoá nhà cung cấp và các phiếu nhập liên quan thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -116,10 +106,7 @@ namespace Nhom12_dhti5a14hn.Controller
                 new SqlParameter("@TenNhaCungCap", SqlDbType.VarChar, 100) { Value = "%" + tenNhaCungCap + "%" }
             };
 
-            return Connect.readData(sql, para); // Trả về kết quả tìm kiếm dưới dạng DataTable
+            return Connect.readData(sql, para);
         }
-
-
-
     }
 }

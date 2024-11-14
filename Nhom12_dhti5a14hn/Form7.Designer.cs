@@ -42,6 +42,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.display_ph = new System.Windows.Forms.DataGridView();
             this.btn_back = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.display_ph)).BeginInit();
@@ -189,11 +190,23 @@
             this.btn_back.UseVisualStyleBackColor = true;
             this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.MediumSeaGreen;
+            this.label2.Location = new System.Drawing.Point(334, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(390, 42);
+            this.label2.TabIndex = 45;
+            this.label2.Text = "Phản hồi khách hàng";
+            // 
             // Form7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1072, 652);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btn_back);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
@@ -205,6 +218,7 @@
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.display_ph)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -223,5 +237,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView display_ph;
         private System.Windows.Forms.Button btn_back;
+        private System.Windows.Forms.Label label2;
     }
 }

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Nhom12_dhti5a14hn
@@ -19,27 +12,22 @@ namespace Nhom12_dhti5a14hn
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
-            
         }
 
         private void panel6_Paint(object sender, PaintEventArgs e)
         {
-            
         }
 
         private void panel5_Paint(object sender, PaintEventArgs e)
         {
-            
         }
 
         private void panel4_Paint(object sender, PaintEventArgs e)
@@ -52,7 +40,6 @@ namespace Nhom12_dhti5a14hn
 
         private void frm_Main_Load(object sender, EventArgs e)
         {
-
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -78,7 +65,6 @@ namespace Nhom12_dhti5a14hn
 
         private void button3_Click(object sender, EventArgs e)
         {
-
             Form5 form5 = new Form5();
             form5.Show();
             this.Hide();
@@ -100,7 +86,6 @@ namespace Nhom12_dhti5a14hn
 
         private void button6_Click(object sender, EventArgs e)
         {
-
             FrmPhieuNhap frmPhieuNhap = new FrmPhieuNhap();
             frmPhieuNhap.Show();
             this.Hide();

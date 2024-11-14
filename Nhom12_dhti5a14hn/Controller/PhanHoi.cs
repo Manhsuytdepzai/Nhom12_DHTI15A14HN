@@ -1,18 +1,15 @@
 ﻿using Nhom12_dhti5a14hn.Connect;
 using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Nhom12_dhti5a14hn.Controller
 {
     internal class PhanHoi
     {
-        connect kn;
+        private connect kn;
+
         public PhanHoi()
         {
             kn = new connect();
@@ -23,6 +20,7 @@ namespace Nhom12_dhti5a14hn.Controller
             string sql = "select * from PhanHoi";
             return kn.readData(sql);
         }
+
         public void AddFeedback(int idDonHang, string noiDung)
         {
             string sqlGetCustomerId = "SELECT ID_KhachHang FROM Donhang WHERE ID_DonHang = @ID_DonHang";
@@ -38,9 +36,8 @@ namespace Nhom12_dhti5a14hn.Controller
                 int idKhachHang = Convert.ToInt32(result.Rows[0]["ID_KhachHang"]);
                 DateTime ngayPhanHoi = DateTime.Now;
 
-                // Thêm dữ liệu vào bảng PhanHoi
                 string sqlInsertFeedback = @"
-                                            INSERT INTO PhanHoi (ID_DonHang, ID_KhachHang, NoiDung, NgayPhanHoi) 
+                                            INSERT INTO PhanHoi (ID_DonHang, ID_KhachHang, NoiDung, NgayPhanHoi)
                                             VALUES (@ID_DonHang, @ID_KhachHang, @NoiDung, @NgayPhanHoi)";
 
                 SqlParameter[] parametersInsertFeedback = new SqlParameter[]
@@ -59,6 +56,5 @@ namespace Nhom12_dhti5a14hn.Controller
                 MessageBox.Show("Không tìm thấy ID_KhachHang tương ứng với ID_DonHang.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
     }
 }

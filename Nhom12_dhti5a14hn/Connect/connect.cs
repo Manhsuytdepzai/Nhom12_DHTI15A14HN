@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Nhom12_dhti5a14hn.Connect
@@ -62,6 +62,8 @@ namespace Nhom12_dhti5a14hn.Connect
         }
 
         // Thực thi câu lệnh không trả về kết quả
+        // Thực thi câu lệnh không trả về kết quả
+        // Thực thi câu lệnh không trả về kết quả
         public void NoneQuery(string sql, SqlParameter[] para)
         {
             try
@@ -71,14 +73,22 @@ namespace Nhom12_dhti5a14hn.Connect
                 {
                     if (para != null)
                     {
-                        cmd.Parameters.AddRange(para);
-                        cmd.ExecuteNonQuery();
+                        // Tạo bản sao của các tham số để tránh lỗi "SqlParameter is already contained by another SqlParameterCollection"
+                        foreach (var p in para)
+                        {
+                            cmd.Parameters.Add(new SqlParameter(p.ParameterName, p.SqlDbType) { Value = p.Value });
+                        }
                     }
+                    cmd.ExecuteNonQuery();
                 }
             }
-            catch (Exception)
+            catch (SqlException ex)
             {
-                MessageBox.Show("Lỗi khi thực thi câu lệnh");
+                MessageBox.Show("Lỗi khi thực thi câu lệnh SQL: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi chung khi thực thi câu lệnh: " + ex.Message);
             }
             finally
             {
