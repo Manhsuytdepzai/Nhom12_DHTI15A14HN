@@ -1,7 +1,6 @@
 ﻿using Nhom12_dhti5a14hn.Connect;
 using System.Data;
 using System.Data.SqlClient;
-using System.Windows.Forms;
 
 namespace Nhom12_dhti5a14hn
 {
@@ -22,17 +21,15 @@ namespace Nhom12_dhti5a14hn
                 SqlParameter[] parameters = new SqlParameter[]
                 {
                     new SqlParameter("@TenDangNhap", username),
-                    new SqlParameter("MatKhau", password)
+                    new SqlParameter("@MatKhau", password)
                 };
-                DataTable dt = new DataTable();
-                dt = ketnoi.readData(sql, parameters);
-                if (dt != null)
+
+                DataTable dt = ketnoi.readData(sql, parameters);
+
+                if (dt != null && dt.Rows.Count > 0 && (int)dt.Rows[0][0] > 0)
                 {
-                    Form2 form2 = new Form2();
-                    form2.Show();
                     return true;
                 }
-                MessageBox.Show(" Sai mật khẩu hoặc tên đăng nhập");
 
                 return false;
             }

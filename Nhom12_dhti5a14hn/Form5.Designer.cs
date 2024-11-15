@@ -43,8 +43,8 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.Display_kh = new System.Windows.Forms.DataGridView();
             this.txtPhoneNumber = new System.Windows.Forms.TextBox();
+            this.Display_kh = new System.Windows.Forms.DataGridView();
             this.btn_back = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Display_kh)).BeginInit();
@@ -96,7 +96,7 @@
             this.label1.ForeColor = System.Drawing.Color.MediumSeaGreen;
             this.label1.Location = new System.Drawing.Point(319, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(489, 52);
+            this.label1.Size = new System.Drawing.Size(483, 51);
             this.label1.TabIndex = 12;
             this.label1.Text = "Danh mục khách hàng ";
             // 
@@ -200,10 +200,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin khách hàng";
             // 
+            // txtPhoneNumber
+            // 
+            this.txtPhoneNumber.Location = new System.Drawing.Point(667, 122);
+            this.txtPhoneNumber.Multiline = true;
+            this.txtPhoneNumber.Name = "txtPhoneNumber";
+            this.txtPhoneNumber.Size = new System.Drawing.Size(196, 40);
+            this.txtPhoneNumber.TabIndex = 18;
+            // 
             // Display_kh
             // 
             this.Display_kh.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.Display_kh.Location = new System.Drawing.Point(138, 308);
+            this.Display_kh.Location = new System.Drawing.Point(138, 325);
             this.Display_kh.Name = "Display_kh";
             this.Display_kh.RowHeadersWidth = 51;
             this.Display_kh.RowTemplate.Height = 24;
@@ -212,14 +220,6 @@
             this.Display_kh.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Display_kh_CellClick);
             this.Display_kh.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Display_kh_CellContentClick);
             this.Display_kh.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.Display_kh_DataBindingComplete);
-            // 
-            // txtPhoneNumber
-            // 
-            this.txtPhoneNumber.Location = new System.Drawing.Point(667, 122);
-            this.txtPhoneNumber.Multiline = true;
-            this.txtPhoneNumber.Name = "txtPhoneNumber";
-            this.txtPhoneNumber.Size = new System.Drawing.Size(196, 40);
-            this.txtPhoneNumber.TabIndex = 18;
             // 
             // btn_back
             // 

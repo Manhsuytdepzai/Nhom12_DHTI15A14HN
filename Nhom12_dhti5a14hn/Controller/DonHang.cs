@@ -420,7 +420,6 @@ namespace Nhom12_dhti5a14hn.Controller
                             MessageBox.Show("Đơn hàng và chi tiết đơn hàng đã được xóa thành công.");
                         }
                     }
-
                 }
                 else
                 {
