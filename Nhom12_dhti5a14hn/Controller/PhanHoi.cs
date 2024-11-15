@@ -17,7 +17,10 @@ namespace Nhom12_dhti5a14hn.Controller
 
         public DataTable getAllph()
         {
-            string sql = "select * from PhanHoi";
+            string sql = @"
+                            SELECT PhanHoi.*, Donhang.SoDienThoai
+                            FROM PhanHoi
+                            LEFT JOIN Donhang ON PhanHoi.ID_DonHang = Donhang.ID_DonHang";
             return kn.readData(sql);
         }
 

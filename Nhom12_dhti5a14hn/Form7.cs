@@ -39,6 +39,7 @@ namespace Nhom12_dhti5a14hn
                     txt_idph.Text = row.Cells["ID_PhanHoi"].Value.ToString();
                     txt_ngaygui.Text = row.Cells["NgayPhanHoi"].Value.ToString();
                     txt_nd.Text = row.Cells["NoiDung"].Value.ToString();
+                    txt_sdt.Text = row.Cells["SoDienThoai"].Value.ToString();
                 }
             }
             catch (Exception ex)
@@ -56,6 +57,11 @@ namespace Nhom12_dhti5a14hn
             frm_Main fm = new frm_Main();
             fm.Show();
             this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            display_ph.DataSource = ph.getAllph();
         }
     }
 }

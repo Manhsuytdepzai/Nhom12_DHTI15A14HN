@@ -24,6 +24,9 @@ namespace Nhom12_dhti5a14hn
             if (user.Login(username, password))
             {
                 MessageBox.Show("Đăng nhập thành công!");
+                frm_Main form = new frm_Main();
+                form.Show();
+                this.Hide();
             }
             else
             {

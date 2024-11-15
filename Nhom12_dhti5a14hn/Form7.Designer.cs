@@ -43,6 +43,9 @@
             this.display_ph = new System.Windows.Forms.DataGridView();
             this.btn_back = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txt_sdt = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.display_ph)).BeginInit();
@@ -50,6 +53,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.txt_sdt);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.a);
             this.groupBox1.Controls.Add(this.s);
@@ -60,7 +66,7 @@
             this.groupBox1.Controls.Add(this.txt_idkh);
             this.groupBox1.Controls.Add(this.txt_idph);
             this.groupBox1.Controls.Add(this.txt_nd);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(138, 64);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(810, 388);
@@ -73,7 +79,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(100, 220);
+            this.label5.Location = new System.Drawing.Point(80, 249);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(126, 29);
             this.label5.TabIndex = 25;
@@ -83,7 +89,7 @@
             // 
             this.a.AutoSize = true;
             this.a.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.a.Location = new System.Drawing.Point(63, 92);
+            this.a.Location = new System.Drawing.Point(43, 78);
             this.a.Name = "a";
             this.a.Size = new System.Drawing.Size(163, 29);
             this.a.TabIndex = 24;
@@ -93,7 +99,7 @@
             // 
             this.s.AutoSize = true;
             this.s.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.s.Location = new System.Drawing.Point(38, 132);
+            this.s.Location = new System.Drawing.Point(18, 118);
             this.s.Name = "s";
             this.s.Size = new System.Drawing.Size(188, 29);
             this.s.TabIndex = 23;
@@ -103,7 +109,7 @@
             // 
             this.x.AutoSize = true;
             this.x.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.x.Location = new System.Drawing.Point(103, 179);
+            this.x.Location = new System.Drawing.Point(83, 158);
             this.x.Name = "x";
             this.x.Size = new System.Drawing.Size(123, 29);
             this.x.TabIndex = 22;
@@ -113,7 +119,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(72, 50);
+            this.label1.Location = new System.Drawing.Point(52, 36);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(154, 29);
             this.label1.TabIndex = 21;
@@ -121,7 +127,7 @@
             // 
             // txt_iddh
             // 
-            this.txt_iddh.Location = new System.Drawing.Point(232, 87);
+            this.txt_iddh.Location = new System.Drawing.Point(232, 73);
             this.txt_iddh.Multiline = true;
             this.txt_iddh.Name = "txt_iddh";
             this.txt_iddh.Size = new System.Drawing.Size(572, 34);
@@ -129,7 +135,7 @@
             // 
             // txt_ngaygui
             // 
-            this.txt_ngaygui.Location = new System.Drawing.Point(232, 173);
+            this.txt_ngaygui.Location = new System.Drawing.Point(232, 153);
             this.txt_ngaygui.Multiline = true;
             this.txt_ngaygui.Name = "txt_ngaygui";
             this.txt_ngaygui.Size = new System.Drawing.Size(572, 34);
@@ -137,7 +143,7 @@
             // 
             // txt_idkh
             // 
-            this.txt_idkh.Location = new System.Drawing.Point(232, 127);
+            this.txt_idkh.Location = new System.Drawing.Point(232, 113);
             this.txt_idkh.Multiline = true;
             this.txt_idkh.Name = "txt_idkh";
             this.txt_idkh.Size = new System.Drawing.Size(572, 34);
@@ -145,7 +151,7 @@
             // 
             // txt_idph
             // 
-            this.txt_idph.Location = new System.Drawing.Point(232, 45);
+            this.txt_idph.Location = new System.Drawing.Point(232, 33);
             this.txt_idph.Multiline = true;
             this.txt_idph.Name = "txt_idph";
             this.txt_idph.Size = new System.Drawing.Size(572, 34);
@@ -153,9 +159,9 @@
             // 
             // txt_nd
             // 
-            this.txt_nd.Location = new System.Drawing.Point(232, 220);
+            this.txt_nd.Location = new System.Drawing.Point(232, 249);
             this.txt_nd.Name = "txt_nd";
-            this.txt_nd.Size = new System.Drawing.Size(572, 162);
+            this.txt_nd.Size = new System.Drawing.Size(572, 133);
             this.txt_nd.TabIndex = 16;
             this.txt_nd.Text = "";
             // 
@@ -201,6 +207,34 @@
             this.label2.TabIndex = 45;
             this.label2.Text = "Phản hồi khách hàng";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(32, 198);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(174, 29);
+            this.label3.TabIndex = 27;
+            this.label3.Text = "Số điện thoại:";
+            // 
+            // txt_sdt
+            // 
+            this.txt_sdt.Location = new System.Drawing.Point(232, 193);
+            this.txt_sdt.Multiline = true;
+            this.txt_sdt.Name = "txt_sdt";
+            this.txt_sdt.Size = new System.Drawing.Size(572, 34);
+            this.txt_sdt.TabIndex = 26;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(48, 305);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(141, 61);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "Reload";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -238,5 +272,8 @@
         private System.Windows.Forms.DataGridView display_ph;
         private System.Windows.Forms.Button btn_back;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txt_sdt;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -13,7 +13,7 @@ namespace Nhom12_dhti5a14hn
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frm_Main());
+            Application.Run(new Form1());
         }
     }
 }
